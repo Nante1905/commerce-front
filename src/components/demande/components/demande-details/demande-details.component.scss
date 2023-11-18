@@ -1,0 +1,22 @@
+.demande-details-root {
+    width: 80%;
+    margin: auto;
+    .info {
+        .card {
+            width: 40%;
+    
+            .list-item {
+                gap: 1rem;
+            }
+        }
+    }
+    .table {
+        margin: 2rem 0;
+        width: 100%;
+        .card {
+            .MuiDataGrid-columnHeaderTitleContainer {
+                justify-content: center;
+            }
+        }
+    }
+}
