@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import "./demande-form.component.scss";
 import {
+  Alert,
   Button,
   Card,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
+  Snackbar,
   TextField,
 } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -20,12 +22,13 @@ import {
   setBesoinQte,
   setDirections,
 } from "../../store/slice/demande.slice";
-import { DemandeStore } from "../../store/demande.store";
+import { DemandeStore, demandeStore } from "../../store/demande.store";
 import {
   DeleteOutline,
   DeleteRounded,
   DeleteTwoTone,
 } from "@mui/icons-material";
+import axios from "axios";
 
 const DemandeForm = () => {
   const dispatch = useDispatch();
@@ -36,27 +39,64 @@ const DemandeForm = () => {
     (state: DemandeStore) => state.demande.form.details
   );
   const articles = useSelector((state: DemandeStore) => state.demande.articles);
+  const form = useSelector((state: DemandeStore) => state.demande.form);
+  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    dispatch(
-      setDirections([
-        { id: 1, nom: "Direction SI" },
-        { id: 2, nom: "Direction Compta" },
-      ])
-    );
+    axios
+      .get("http://localhost:8080/directions")
+      .then((res) => {
+        const response = res.data;
+        if (response.ok) {
+          dispatch(setDirections(response.data));
+        } else {
+          setError(response.error);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
-    dispatch(
-      setArticles([
-        { id: 1, ref: "B10", designation: "Cahier" },
-        { id: 2, ref: "B20", designation: "Stylo" },
-      ])
-    );
+    axios
+      .get("http://localhost:8080/articles")
+      .then((res) => {
+        const response = res.data;
+        if (response.ok) {
+          dispatch(setArticles(response.data));
+        } else {
+          setError(response.error);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }, []);
+
+  const sendForm = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log(form);
+    axios
+      .post("http://localhost:8080/demandes", form)
+      .then((res) => {
+        const response = res.data;
+        if (response.ok) {
+          setMessage(
+            response.message ? response.message : "Insertion de besoins réussie"
+          );
+        } else {
+          setError(response.error);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   return (
     <div className="demande-form-container">
       <Card className="card">
-        <form className="form">
+        <form className="form" onSubmit={(event) => sendForm(event)}>
           <div className="input-flex">
             <FormControl className="input" sx={{ width: 200 }}>
               <InputLabel id="select-label">Direction</InputLabel>
@@ -89,17 +129,20 @@ const DemandeForm = () => {
                     labelId="select-label"
                     id="select"
                     label="Article"
-                    value={details.article.id > 0 ? details.article.id : null}
+                    value={details.idArticle > 0 ? details.idArticle : ""}
                     onChange={(event) => {
                       dispatch(
-                        setBesoinArticle({ index, value: event.target.value })
+                        setBesoinArticle({
+                          index,
+                          value: event.target.value as number,
+                        })
                       );
                     }}
                     required
                   >
                     {articles.map((a, index) => (
                       <MenuItem key={`a_${index}`} value={a.id}>
-                        {a.ref} - {a.designation}
+                        {a.reference} - {a.designation}
                       </MenuItem>
                     ))}
                   </Select>
@@ -108,7 +151,7 @@ const DemandeForm = () => {
                 <FormControl>
                   <TextField
                     label="Quantité"
-                    value={details.quantite > 0 ? details.quantite : null}
+                    value={details.quantite > 0 ? details.quantite : ""}
                     onChange={(event) => {
                       dispatch(
                         setBesoinQte({ index, value: event.target.value })
@@ -136,6 +179,33 @@ const DemandeForm = () => {
           </div>
         </form>
       </Card>
+      <Snackbar
+        open={message != null}
+        onClose={() => {
+          setMessage(null);
+        }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          severity="success"
+          onClose={() => {
+            setMessage(null);
+          }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={error != null}
+        onClose={() => {
+          setError(null);
+        }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert severity="error" onClose={() => setError(null)}>
+          {error}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

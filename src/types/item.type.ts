@@ -1,10 +1,10 @@
 export interface Direction {
     id: number,
-    nom: string
+    nom?: string
 }
 
 export interface Article {
     id: number,
     designation?: string,
-    ref?: string
+    reference?: string
 }

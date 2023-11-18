@@ -3,12 +3,12 @@ import { Article, Direction } from "../../../../types/item.type";
 import _ from "lodash";
 
 interface DetailsDemandeMin {
-    article: Article
+    idArticle: number
     quantite: number
 }
 
 interface DemandeBesoinForm {
-    direction: number,
+    direction: Direction,
     details: DetailsDemandeMin[]
 }
 
@@ -22,9 +22,9 @@ const initialState: DemandeState = {
     directions: [],
     articles: [],
     form: {
-        direction: 0,
+        direction: { id: 0 },
         details: [{
-            article: { id: 0 },
+            idArticle: 0,
             quantite: 0
         }]
     }
@@ -41,18 +41,16 @@ export const DemandeSlice = createSlice({
             state.articles = action.payload
         },
         setBesoinDirection: (state, action) => {
-            state.form.direction = action.payload
+            state.form.direction.id = action.payload
         },
         addDetails: (state) => {
             state.form.details.push({
-                article: {
-                    id: 0
-                },
+                idArticle: 0,
                 quantite: 0
             })
         },
         setBesoinArticle: (state, action) => {
-            state.form.details[action.payload.index].article.id = action.payload.value as number
+            state.form.details[action.payload.index].idArticle = action.payload.value as number
         },
         setBesoinQte: (state, action) => {
             state.form.details[action.payload.index].quantite = action.payload.value as number
