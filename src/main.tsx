@@ -4,6 +4,9 @@ import App from "./App.tsx";
 import "./index.css";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import Title from "./components/title/title.component.tsx";
+import DemandeFormRoot from "./components/demande/containers/demande-form-root/demande-form-root.component.tsx";
+import { Provider } from "react-redux";
+import { demandeStore } from "./components/demande/store/demande.store.ts";
 
 const routes = createBrowserRouter([
   {
@@ -17,6 +20,14 @@ const routes = createBrowserRouter([
       {
         path: "title",
         element: <Title text={"Insertion de besoin"} />,
+      },
+      {
+        path: "besoins",
+        element: (
+          <Provider store={demandeStore}>
+            <DemandeFormRoot />
+          </Provider>
+        ),
       },
     ],
   },

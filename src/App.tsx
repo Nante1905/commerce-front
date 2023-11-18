@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.scss";
 import SidebarComponent from "./components/sidebar/components/sidebar-component/sidebar.component";
 
 interface AppProps {
@@ -14,4 +14,3 @@ function App({ children }: AppProps) {
 }
 
 export default App;
-
