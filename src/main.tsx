@@ -8,6 +8,7 @@ import DemandeFormRoot from "./components/demande/containers/demande-form-root/d
 import { demandeStore } from "./components/demande/store/demande.store.ts";
 import Title from "./components/title/title.component.tsx";
 import "./index.css";
+import DemandeNatureRoot from "./components/demande/containers/demande-nature-root/demande-nature-root.component.tsx";
 
 const routes = createBrowserRouter([
   {
@@ -33,6 +34,14 @@ const routes = createBrowserRouter([
       {
         path: "demandes/:id",
         element: <DemandeDetailsRoot />,
+      },
+      {
+        path: "demandes/nature",
+        element: (
+          <Provider store={demandeStore}>
+            <DemandeNatureRoot />
+          </Provider>
+        ),
       },
       {
         path: "/test",

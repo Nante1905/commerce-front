@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { AuthenticationStore } from "../../../authentication/store/authentication.store";
 import "./nav-item.component.scss";
+import { NavItem } from "../../types/navItem.type";
 
 interface NavItemProps {
   navItem: NavItem;

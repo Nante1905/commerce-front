@@ -14,3 +14,16 @@ export interface Demande {
     direction: Direction,
     details: DetailsDemande[]
 }
+
+interface DetailsDemandeParNature {
+    direction: Direction,
+    status: number,
+    quantite: number,
+    idDemande: number
+}
+
+export interface DemandeParNature {
+    article: Article,
+    details: DetailsDemandeParNature[],
+    total: number
+}
