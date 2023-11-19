@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
-import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
-import Title from "./components/title/title.component.tsx";
-import DemandeFormRoot from "./components/demande/containers/demande-form-root/demande-form-root.component.tsx";
 import { Provider } from "react-redux";
-import { demandeStore } from "./components/demande/store/demande.store.ts";
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import App from "./App.tsx";
 import DemandeDetailsRoot from "./components/demande/containers/demande-details-root/demande-details-root.component.tsx";
+import DemandeFormRoot from "./components/demande/containers/demande-form-root/demande-form-root.component.tsx";
+import { demandeStore } from "./components/demande/store/demande.store.ts";
+import Title from "./components/title/title.component.tsx";
+import "./index.css";
 
 const routes = createBrowserRouter([
   {
@@ -33,6 +33,10 @@ const routes = createBrowserRouter([
       {
         path: "demandes/:id",
         element: <DemandeDetailsRoot />,
+      },
+      {
+        path: "/test",
+        element: <div>Test</div>,
       },
     ],
   },
