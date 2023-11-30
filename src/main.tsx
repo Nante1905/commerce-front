@@ -5,6 +5,7 @@ import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import DemandeDetailsRoot from "./components/demande/containers/demande-details-root/demande-details-root.component.tsx";
 import DemandeFormRoot from "./components/demande/containers/demande-form-root/demande-form-root.component.tsx";
+import DemandeListRoot from "./components/demande/containers/demande-list-root/demande-list-root.component.tsx";
 import { demandeStore } from "./components/demande/store/demande.store.ts";
 import Title from "./components/title/title.component.tsx";
 import "./index.css";
@@ -19,11 +20,19 @@ const routes = createBrowserRouter([
     ),
     children: [
       {
+        path: "/demandes",
+        element: (
+          <Provider store={demandeStore}>
+            <DemandeListRoot />
+          </Provider>
+        ),
+      },
+      {
         path: "title",
         element: <Title text={"Insertion de besoin"} />,
       },
       {
-        path: "demandes",
+        path: "demandes/create",
         element: (
           <Provider store={demandeStore}>
             <DemandeFormRoot />

@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { AuthenticationStore } from "../../../authentication/store/authentication.store";
 import NavItemComponent from "../nav-item/nav-item.component";
 import "./sidebar.component.scss";
@@ -32,7 +33,11 @@ const SidebarComponent = ({ children, navItems }: SidebarProps) => {
 
             <div className="text logo-text">
               <span className="name">
-                {employe?.nom} {employe?.prenom}
+                {employe ? (
+                  `${employe.nom} ${employe.prenom}`
+                ) : (
+                  <Link to="/login">Se connecter</Link>
+                )}
               </span>
               <span className="profession">{employe?.direction.nom}</span>
             </div>
