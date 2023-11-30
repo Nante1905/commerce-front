@@ -11,14 +11,13 @@ import {
   TableRow,
 } from "@mui/material";
 import "./demande-nature.component.scss";
-import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import DemandeNatureRow from "../demande-nature-row/demande-nature-row.component";
-import { DemandeParNature } from "../../types/demande.type";
+import { DemandeParNature } from "../../../shared/types/demande.type";
 
 const DemandeNature = (props: any) => {
-  const data = props.demandes;
+  const data: DemandeParNature[] = props.demandes;
 
   const render = () => {
     if (data) {

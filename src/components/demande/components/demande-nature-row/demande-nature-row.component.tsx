@@ -12,11 +12,24 @@ import {
   TableRow,
 } from "@mui/material";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
+import { DemandeParNature } from "../../../shared/types/demande.type";
+import DemandeNatureCollapsed from "./demande-nature-collapsed.component";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleMainDemande } from "../../store/slice/demandeNature.slice";
+import { DemandeStore } from "../../store/demande.store";
 
 const DemandeNatureRow = (props: any) => {
-  const d = props.data;
+  const d: DemandeParNature = props.data;
   const dataIndex = props.index;
   const [open, setOpen] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const checked = useSelector(
+    (state: DemandeStore) => state.demandeNature.demandes[dataIndex].selected
+  );
+
+  const checkable = useSelector(
+    (state: DemandeStore) => state.demandeNature.checkable
+  );
 
   return (
     <>
@@ -36,19 +49,18 @@ const DemandeNatureRow = (props: any) => {
         <TableCell component="th" scope="row">
           {d.article.designation}
         </TableCell>
-        <TableCell align="right">{d.total}</TableCell>
+        <TableCell align="right">
+          <strong>{d.total}</strong>
+        </TableCell>
         <TableCell>
-          <Checkbox
-            // onChange={() =>
-            //   dispatch(
-            //     updateValueAnswer({
-            //       questionId: numero,
-            //       id: id,
-            //     })
-            //   )
-            // }
-            checked
-          />
+          {checkable && (
+            <Checkbox
+              onChange={() => {
+                dispatch(toggleMainDemande(dataIndex));
+              }}
+              checked={checked}
+            />
+          )}
         </TableCell>
       </TableRow>
       <TableRow>
@@ -58,20 +70,21 @@ const DemandeNatureRow = (props: any) => {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell></TableCell>
+                    <TableCell>Jour</TableCell>
                     <TableCell>Direction</TableCell>
                     <TableCell align="center">Quantité</TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {d.details.map((details, detailsIndex) => (
-                    <>
-                      <TableRow key={`details_${dataIndex}_${detailsIndex}`}>
-                        <TableCell></TableCell>
-                        <TableCell>{details.direction.nom}</TableCell>
-                        <TableCell align="right">{details.quantite}</TableCell>
-                      </TableRow>
-                    </>
+                    <DemandeNatureCollapsed
+                      key={`details_${dataIndex}_${detailsIndex}`}
+                      article={d.article}
+                      details={details}
+                      iArticle={dataIndex}
+                      iDetails={detailsIndex}
+                    />
                   ))}
                 </TableBody>
               </Table>

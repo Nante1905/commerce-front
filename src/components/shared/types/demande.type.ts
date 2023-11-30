@@ -15,15 +15,18 @@ export interface Demande {
     details: DetailsDemande[]
 }
 
-interface DetailsDemandeParNature {
+export interface DetailsDemandeParNature {
     direction: Direction,
     status: number,
     quantite: number,
     idDemande: number
+    jour: string,
+    selected?: boolean
 }
 
 export interface DemandeParNature {
     article: Article,
     details: DetailsDemandeParNature[],
-    total: number
+    total: number,
+    selected?: boolean
 }
