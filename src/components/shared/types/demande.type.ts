@@ -14,3 +14,19 @@ export interface Demande {
     direction: Direction,
     details: DetailsDemande[]
 }
+
+export interface DetailsDemandeParNature {
+    direction: Direction,
+    status: number,
+    quantite: number,
+    idDemande: number
+    jour: string,
+    selected?: boolean
+}
+
+export interface DemandeParNature {
+    article: Article,
+    details: DetailsDemandeParNature[],
+    total: number,
+    selected?: boolean
+}

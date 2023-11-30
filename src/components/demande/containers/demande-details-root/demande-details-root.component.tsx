@@ -3,7 +3,7 @@ import DemandeDetails from "../../components/demande-details/demande-details.com
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { apiUrl } from "../../../../env";
-import { Demande } from "../../types/demande.type";
+import { Demande } from "../../../shared/types/demande.type";
 import Title from "../../../title/title.component";
 
 const DemandeDetailsRoot = () => {

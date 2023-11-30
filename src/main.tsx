@@ -9,6 +9,8 @@ import DemandeListRoot from "./components/demande/containers/demande-list-root/d
 import { demandeStore } from "./components/demande/store/demande.store.ts";
 import Title from "./components/title/title.component.tsx";
 import "./index.css";
+import DemandeNatureRoot from "./components/demande/containers/demande-nature-root/demande-nature-root.component.tsx";
+import DemandeProformaRoot from "./components/proforma/containers/demande-proforma-root/demande-proforma-root.component.tsx";
 
 const routes = createBrowserRouter([
   {
@@ -42,6 +44,22 @@ const routes = createBrowserRouter([
       {
         path: "demandes/:id",
         element: <DemandeDetailsRoot />,
+      },
+      {
+        path: "demandes/nature",
+        element: (
+          <Provider store={demandeStore}>
+            <DemandeNatureRoot />
+          </Provider>
+        ),
+      },
+      {
+        path: "proforma/demande",
+        element: (
+          <Provider store={demandeStore}>
+            <DemandeProformaRoot />
+          </Provider>
+        ),
       },
       {
         path: "/test",

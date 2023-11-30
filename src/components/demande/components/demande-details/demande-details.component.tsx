@@ -1,7 +1,7 @@
 import Card from "@mui/material/Card";
 import Title from "../../../title/title.component";
 import "./demande-details.component.scss";
-import { Demande } from "../../types/demande.type";
+import { Demande } from "../../../shared/types/demande.type";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Chip from "@mui/material/Chip";

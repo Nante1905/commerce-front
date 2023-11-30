@@ -1,4 +1,5 @@
 import SidebarComponent from "../../components/sidebar-component/sidebar.component";
+import { NavItem } from "../../types/navItem.type";
 
 interface SidebarRootProps {
   children: JSX.Element;
