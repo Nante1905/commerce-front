@@ -23,3 +23,18 @@ export const initialState = {
     message: "",
   },
 };
+
+interface DemandeProforma {
+  id: number;
+  reference: string;
+  delaiLivraison: string;
+  jourDemande: string;
+}
+
+export interface DemandeProformaDetails {
+  id: number;
+  fournisseur: Fournisseur;
+  reference: string;
+  demandeProforma: DemandeProforma;
+  etat: number;
+}

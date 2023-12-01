@@ -15,3 +15,6 @@ export const sendDemande = (
     fournisseurs: fournisseurs,
     demandes: demandes,
   });
+
+export const findProformaSansReponse = () =>
+  httpClient.get("/proforma/sans-reponse");

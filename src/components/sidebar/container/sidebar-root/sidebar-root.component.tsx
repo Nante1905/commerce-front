@@ -11,7 +11,7 @@ const SidebarRoot = ({ children }: SidebarRootProps) => {
       text: "Liste des demandes",
       icon: "bx bx-home-alt",
       link: "/demandes/",
-      authorization: ["Direction des Achats"],
+      authorization: ["Direction des Achats", "Direction Financière"],
     },
     {
       text: "Demandes par nature",

@@ -121,7 +121,7 @@ export default function SignIn() {
           sx={{ width: "100%" }}
           onClose={() => setErrMessage("")}
         >
-          Identifiants invalides.
+          {errMessage}
         </Alert>
       </Snackbar>
     </ThemeProvider>
