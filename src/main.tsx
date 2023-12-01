@@ -10,6 +10,7 @@ import DemandeFormRoot from "./components/demande/containers/demande-form-root/d
 import DemandeListRoot from "./components/demande/containers/demande-list-root/demande-list-root.component.tsx";
 import DemandeNatureRoot from "./components/demande/containers/demande-nature-root/demande-nature-root.component.tsx";
 import { demandeStore } from "./components/demande/store/demande.store.ts";
+import ProformaReponseListComponent from "./components/proforma/components/proforma-reponse-list/proforma-reponse-list.tsx";
 import DemandeProformaListRoot from "./components/proforma/containers/demande-proforma-list-root/demande-profoma-list-root.tsx";
 import DemandeProformaRoot from "./components/proforma/containers/demande-proforma-root/demande-proforma-root.component.tsx";
 import SaisieReponseProformaRoot from "./components/proforma/containers/saisie-reponse-proforma-root/saisie-reponse-proforma-root.tsx";
@@ -80,6 +81,10 @@ const routes = createBrowserRouter([
         element: <DemandeProformaListRoot />,
       },
       {
+        path: "proforma/demandes/avec-reponse",
+        element: <ProformaReponseListComponent />,
+      },
+      {
         path: "proforma/:id/reponse",
         element: <SaisieReponseProformaRoot />,
       },
@@ -87,7 +92,7 @@ const routes = createBrowserRouter([
         path: "/test",
         element: (
           <>
-            <SaisieReponseProformaRoot />
+            <ProformaReponseListComponent />
           </>
         ),
       },

@@ -1,0 +1,15 @@
+@import "../../../../styles/color.scss";
+
+.proforma-reponse-list {
+  header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .table {
+    padding-inline: 1rem;
+    th {
+      font-weight: bold;
+      border-bottom: 2px solid $secondary-color;
+    }
+  }
+}

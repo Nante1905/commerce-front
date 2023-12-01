@@ -25,3 +25,9 @@ export const sendReponse = (id, form) =>
     formatPrix: form.formatPrix,
     details: form.details,
   });
+
+export const findProformaWithReponse = () =>
+  httpClient.get("/proforma/avec-reponse");
+
+export const genererBonDeCommande = (proformaId) =>
+  httpClient.get(`/proforma/${proformaId}/bon-commande`);

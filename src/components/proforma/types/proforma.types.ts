@@ -45,3 +45,16 @@ export interface DetailsResultatProforma {
   quantiteDispo: number;
   pu: number;
 }
+
+export interface Proforma {
+  id: number;
+  reference: string;
+  delaiLivraison: string;
+  jourDemande: string;
+}
+
+export interface ProformaResultat {
+  proforma: Proforma;
+  demande: number;
+  reponse: number;
+}
