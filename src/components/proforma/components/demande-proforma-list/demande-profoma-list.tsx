@@ -6,6 +6,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import { DemandeProformaDetails } from "../../types/proforma.types";
 import "./demande-profoma-list.scss";
 
@@ -33,7 +34,11 @@ const DemandeProformaListComponent = (props: DemandeProformaListProps) => {
                 <TableCell>{demande.fournisseur.nom}</TableCell>
                 <TableCell>{demande.fournisseur.email}</TableCell>
                 <TableCell>
-                  <Button variant="contained">Saisir Resultat proforma</Button>
+                  <Link to={`/proforma/${demande.id}/reponse`}>
+                    <Button variant="contained">
+                      Saisir Resultat proforma
+                    </Button>
+                  </Link>
                 </TableCell>
               </TableRow>
             ))}

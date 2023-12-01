@@ -38,7 +38,18 @@ const SaisieReponseProformaComponent = (props: SaisieReponseProformaProps) => {
             }}
           >
             <InputLabel>Prix</InputLabel>
-            <Select label="Prix">
+            <Select
+              label="Prix"
+              onChange={(event) => {
+                setState((state) => ({
+                  ...state,
+                  form: {
+                    ...state.form,
+                    formatPrix: event.target.value as number,
+                  },
+                }));
+              }}
+            >
               <MenuItem value={TTC}>TTC</MenuItem>
               <MenuItem value={HT}>HT</MenuItem>
             </Select>
@@ -53,7 +64,13 @@ const SaisieReponseProformaComponent = (props: SaisieReponseProformaProps) => {
               <DatePicker
                 label="Date delai livraison"
                 onChange={(value: Dayjs | null) =>
-                  console.log(value?.format("YYYY-MM-DD") as string)
+                  setState((state) => ({
+                    ...state,
+                    form: {
+                      ...state.form,
+                      delaiLivraison: value?.format("YYYY-MM-DD") as string,
+                    },
+                  }))
                 }
                 format="DD/MM/YYYY"
               />
