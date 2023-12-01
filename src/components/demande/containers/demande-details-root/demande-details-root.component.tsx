@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import DemandeDetails from "../../components/demande-details/demande-details.component";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { apiUrl } from "../../../../env";
+import { httpClient } from "../../../shared/services/interceptor/axios.interceptor";
 import { Demande } from "../../../shared/types/demande.type";
 import Title from "../../../title/title.component";
+import DemandeDetails from "../../components/demande-details/demande-details.component";
 
 const DemandeDetailsRoot = () => {
   const id = useParams().id;
@@ -12,7 +12,7 @@ const DemandeDetailsRoot = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    axios
+    httpClient
       .get(`${apiUrl}/demandes/${id}`)
       .then((res) => {
         const response = res.data;

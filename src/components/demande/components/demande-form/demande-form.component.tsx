@@ -1,6 +1,5 @@
-import { FormEvent, useEffect, useState } from "react";
-import { useDispatch, useSelector, useStore } from "react-redux";
-import "./demande-form.component.scss";
+import { DeleteRounded } from "@mui/icons-material";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import {
   Alert,
   Button,
@@ -12,7 +11,10 @@ import {
   Snackbar,
   TextField,
 } from "@mui/material";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { FormEvent, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { httpClient } from "../../../shared/services/interceptor/axios.interceptor";
+import { DemandeStore } from "../../store/demande.store";
 import {
   addDetails,
   dropBesoin,
@@ -22,19 +24,15 @@ import {
   setBesoinQte,
   setDirections,
 } from "../../store/slice/demande.slice";
-import { DemandeStore, demandeStore } from "../../store/demande.store";
-import {
-  DeleteOutline,
-  DeleteRounded,
-  DeleteTwoTone,
-} from "@mui/icons-material";
-import axios from "axios";
+import "./demande-form.component.scss";
 
 const DemandeForm = () => {
   const dispatch = useDispatch();
   const directions = useSelector(
     (state: DemandeStore) => state.demande.directions
   );
+  const user = useSelector((state: DemandeStore) => state.authetication.user);
+
   const details = useSelector(
     (state: DemandeStore) => state.demande.form.details
   );
@@ -44,7 +42,7 @@ const DemandeForm = () => {
   const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    axios
+    httpClient
       .get("http://localhost:8080/directions")
       .then((res) => {
         const response = res.data;
@@ -58,7 +56,7 @@ const DemandeForm = () => {
         console.error(err);
       });
 
-    axios
+    httpClient
       .get("http://localhost:8080/articles")
       .then((res) => {
         const response = res.data;
@@ -73,10 +71,15 @@ const DemandeForm = () => {
       });
   }, []);
 
+  useEffect(() => {
+    dispatch(setBesoinDirection(user?.direction.id));
+    console.log(user?.direction.id);
+  }, [user]);
+
   const sendForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(form);
-    axios
+    httpClient
       .post("http://localhost:8080/demandes", form)
       .then((res) => {
         const response = res.data;
@@ -107,7 +110,9 @@ const DemandeForm = () => {
                 onChange={(event) => {
                   dispatch(setBesoinDirection(event.target.value as number));
                 }}
+                value={user?.direction.id ? user.direction.id : ""}
                 required
+                disabled
               >
                 {directions.map((d, index) => (
                   <MenuItem key={`d_${index}`} value={d.id}>

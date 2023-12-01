@@ -3,17 +3,17 @@ import Title from "../../../title/title.component";
 import DemandeNature from "../../components/demande-nature/demande-nature.component";
 import "./demande-nature-root.component.scss";
 
+import { Alert, Button, Snackbar } from "@mui/material";
 import { useEffect, useState } from "react";
+import { apiUrl } from "../../../../env";
+import { httpClient } from "../../../shared/services/interceptor/axios.interceptor";
+import { DemandeParNature } from "../../../shared/types/demande.type";
+import { DemandeStore } from "../../store/demande.store";
 import {
   SelectedDetails,
   setChecking,
   setDemandeNature,
 } from "../../store/slice/demandeNature.slice";
-import axios from "axios";
-import { apiUrl } from "../../../../env";
-import { DemandeStore } from "../../store/demande.store";
-import { Alert, Button, Snackbar } from "@mui/material";
-import { DemandeParNature } from "../../../shared/types/demande.type";
 
 const DemandeNatureRoot = () => {
   document.title = "Besoin par nature";
@@ -28,7 +28,7 @@ const DemandeNatureRoot = () => {
   useEffect(() => {
     console.log("LOADING DATA");
 
-    axios
+    httpClient
       .get(`${apiUrl}/demandes/nature/service`)
       .then((res) => {
         const response = res.data;
@@ -38,8 +38,8 @@ const DemandeNatureRoot = () => {
           console.log(response.data);
           const data: DemandeParNature[] = response.data;
 
-          dispatch(setDemandeNature(data));
           dispatch(setChecking(true));
+          dispatch(setDemandeNature(data));
           console.log(demandes);
         } else {
           setError(response.error);
@@ -66,7 +66,7 @@ const DemandeNatureRoot = () => {
       });
     });
 
-    axios
+    httpClient
       .post(`${apiUrl}/demandes/validation`, {
         selected,
         rejected,

@@ -3,23 +3,35 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
+import SignIn from "./components/authentication/components/signin/SignIn.component.tsx";
+import { authenticationStore } from "./components/authentication/store/authentication.store.ts";
 import DemandeDetailsRoot from "./components/demande/containers/demande-details-root/demande-details-root.component.tsx";
 import DemandeFormRoot from "./components/demande/containers/demande-form-root/demande-form-root.component.tsx";
 import DemandeListRoot from "./components/demande/containers/demande-list-root/demande-list-root.component.tsx";
+import DemandeNatureRoot from "./components/demande/containers/demande-nature-root/demande-nature-root.component.tsx";
 import { demandeStore } from "./components/demande/store/demande.store.ts";
+import DemandeProformaRoot from "./components/proforma/containers/demande-proforma-root/demande-proforma-root.component.tsx";
+import LoginProtection from "./components/shared/components/login-protection/LoginProtection.tsx";
 import Title from "./components/title/title.component.tsx";
 import "./index.css";
-import DemandeNatureRoot from "./components/demande/containers/demande-nature-root/demande-nature-root.component.tsx";
-import DemandeProformaRoot from "./components/proforma/containers/demande-proforma-root/demande-proforma-root.component.tsx";
 
 const routes = createBrowserRouter([
   {
     path: "/",
+    element: <SignIn />,
+  },
+  {
+    path: "/",
     element: (
-      <App>
-        <Outlet />
-      </App>
+      <LoginProtection>
+        <App>
+          <Provider store={authenticationStore}>
+            <Outlet />
+          </Provider>
+        </App>
+      </LoginProtection>
     ),
+
     children: [
       {
         path: "/demandes",

@@ -1,11 +1,35 @@
-import { useState } from "react";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
+import {
+  Alert,
+  Box,
+  Button,
+  Checkbox,
+  CircularProgress,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormHelperText,
+  Modal,
+  Snackbar,
+  Typography,
+} from "@mui/material";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+import { Dayjs } from "dayjs";
+import { ChangeEvent, useState } from "react";
 import "./proforma-modal.component.scss";
-import { Box, Modal, Typography } from "@mui/material";
+
+interface ProformaModalState {
+  fournisseurs: number[];
+  livraison: string;
+}
 
 const ProformaModal = (props: any) => {
-  const [openState, setOpenState] = useState<boolean>(props.open);
-
-  console.log("MODAAL", props.open);
+  const [state, setState] = useState<ProformaModalState>({
+    fournisseurs: props.fournisseurs,
+    livraison: "",
+  });
 
   const style = {
     position: "absolute" as "absolute",
@@ -19,27 +43,101 @@ const ProformaModal = (props: any) => {
     p: 4,
   };
 
-  const open = () => {
-    setOpenState(true);
+  const handleCheckFournisseur = (event: ChangeEvent<HTMLInputElement>) => {
+    const fournisseurs = [...state.fournisseurs];
+    if (fournisseurs.includes(parseInt(event.target.value))) {
+      const index = fournisseurs.indexOf(parseInt(event.target.value));
+      fournisseurs.splice(index, 1);
+      setState({ ...state, fournisseurs: fournisseurs });
+    } else {
+      fournisseurs.push(parseInt(event.target.value));
+      setState({ ...state, fournisseurs: fournisseurs });
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    props.onModalSubmit(state.fournisseurs, state.livraison);
   };
 
   return (
     <div>
       <Modal
-        open={openState}
-        onClose={() => setOpenState(false)}
+        open={props.open}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+          <CancelOutlinedIcon
+            className="close-icon"
+            onClick={props.closeModal}
+          />
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            textAlign={"center"}
+          >
+            Remplir les informations pour la demande de proforma
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+
+          <div className="form-modal">
+            <form onSubmit={handleSubmit}>
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                adapterLocale="en-gb"
+              >
+                <DatePicker
+                  label="Date delai livraison"
+                  onChange={(value: Dayjs | null) =>
+                    setState((state: ProformaModalState) => ({
+                      ...state,
+                      livraison: value?.format("YYYY-MM-DD") as string,
+                    }))
+                  }
+                  format="DD/MM/YYYY"
+                />
+              </LocalizationProvider>
+              <br />
+              <FormControl
+                className="fournisseur-checkbox"
+                error={
+                  state.fournisseurs.length < 3 &&
+                  props.fournisseurs.length >= 3
+                }
+              >
+                <FormGroup>
+                  <h5>Fournisseurs</h5>
+                  {props.fournisseurs?.map((fournisseur) => (
+                    <FormControlLabel
+                      key={fournisseur.id}
+                      control={
+                        <Checkbox
+                          onChange={(event) => handleCheckFournisseur(event)}
+                          value={fournisseur.id}
+                        />
+                      }
+                      label={fournisseur.nom}
+                    />
+                  ))}
+                </FormGroup>
+                <FormHelperText>Au moins 3</FormHelperText>
+              </FormControl>
+              <Button variant="contained" type="submit">
+                Valider
+              </Button>
+            </form>
+          </div>
+          {props.modal.sendLoading ? (
+            <CircularProgress style={{ textAlign: "center" }} />
+          ) : (
+            <></>
+          )}
         </Box>
       </Modal>
+      <Snackbar open={props.modal.sendSuccess}>
+        <Alert severity="success">{props.modal.message}</Alert>
+      </Snackbar>
     </div>
   );
 };

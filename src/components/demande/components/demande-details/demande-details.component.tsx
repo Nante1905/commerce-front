@@ -1,16 +1,15 @@
 import Card from "@mui/material/Card";
-import Title from "../../../title/title.component";
-import "./demande-details.component.scss";
-import { Demande } from "../../../shared/types/demande.type";
+import Chip from "@mui/material/Chip";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import Chip from "@mui/material/Chip";
 import {
   DataGrid,
   GridColDef,
   GridValueGetterParams,
   frFR,
 } from "@mui/x-data-grid";
+import { Demande } from "../../../shared/types/demande.type";
+import "./demande-details.component.scss";
 
 const DemandeDetails = (props: any) => {
   const demande: Demande = props.demande;
@@ -27,12 +26,12 @@ const DemandeDetails = (props: any) => {
     "5": "Validé",
   };
 
-  const renderStatut = (isOpen: boolean) => {
-    return isOpen ? (
-      <Chip label="Ouvert" className="div-success" />
-    ) : (
-      <Chip label="Fermé" className="div-danger" />
-    );
+  const renderStatut = (status: number) => {
+    if (status == 0) {
+      return <Chip label="Ouvert" className="div-success" />;
+    } else if (status == 5) {
+      return <Chip label="Validé" className="div-success" />;
+    }
   };
 
   const columns: GridColDef[] = [
@@ -141,7 +140,7 @@ const DemandeDetails = (props: any) => {
                 <ListItem className="list-item">
                   {" "}
                   <strong className="info-item-title">Statut</strong>{" "}
-                  <span>{renderStatut(demande.estOuvert)}</span>
+                  <span>{renderStatut(demande.etat)}</span>
                 </ListItem>
               </List>
             </Card>

@@ -12,12 +12,12 @@ import { DemandeStore } from "../../store/demande.store";
 import "./demande-list.component.scss";
 
 const DemandeListComponent = () => {
-  const renderStatut = (isOpen: boolean) => {
-    return isOpen ? (
-      <Chip label="Ouvert" className="div-success" />
-    ) : (
-      <Chip label="Fermé" className="div-danger" />
-    );
+  const renderStatut = (status: number) => {
+    if (status == 0) {
+      return <Chip label="Ouvert" className="div-success" />;
+    } else if (status == 5) {
+      return <Chip label="Validé" className="div-success" />;
+    }
   };
 
   const columns: GridColDef[] = [
@@ -49,7 +49,7 @@ const DemandeListComponent = () => {
       headerName: "",
       width: 100,
       sortable: false,
-      renderCell: (params) => renderStatut(params.row.estOuvert),
+      renderCell: (params) => renderStatut(params.row.etat),
     },
     {
       field: "details",

@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import "./App.scss";
 import { authenticationActions } from "./components/authentication/store/authentication.reducer";
 import { authenticationStore } from "./components/authentication/store/authentication.store";
+import { demandeStore } from "./components/demande/store/demande.store";
 import { httpClient } from "./components/shared/services/interceptor/axios.interceptor";
 import SidebarRoot from "./components/sidebar/container/sidebar-root/sidebar-root.component";
 
@@ -16,6 +17,9 @@ function App({ children }: AppProps) {
       .get("/employes/me")
       .then((res) => {
         authenticationStore.dispatch(
+          authenticationActions.verifySuccess(res.data.data)
+        );
+        demandeStore.dispatch(
           authenticationActions.verifySuccess(res.data.data)
         );
       })

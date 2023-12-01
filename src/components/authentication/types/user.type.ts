@@ -9,3 +9,8 @@ export interface User {
   email: string;
   direction: Direction;
 }
+
+export interface UserCredentials {
+  email: string;
+  password: string;
+}

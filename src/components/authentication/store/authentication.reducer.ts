@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { User } from "../types/user.type";
-import { act } from "react-dom/test-utils";
-
 export interface AuthenticationState {
   user?: User;
 }

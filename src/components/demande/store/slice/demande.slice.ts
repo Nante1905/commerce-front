@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Article, Direction } from "../../../../types/item.type";
 import _ from "lodash";
-import { Demande } from "../../types/demande.type";
+import { Demande } from "../../../shared/types/demande.type";
 
 interface DetailsDemandeMin {
   idArticle: number;

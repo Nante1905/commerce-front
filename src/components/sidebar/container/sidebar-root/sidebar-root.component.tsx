@@ -8,9 +8,15 @@ interface SidebarRootProps {
 const SidebarRoot = ({ children }: SidebarRootProps) => {
   const navs: NavItem[] = [
     {
-      text: "Dashboard",
+      text: "Liste des demandes",
       icon: "bx bx-home-alt",
-      link: "#",
+      link: "/demandes/",
+      authorization: ["Direction des Achats"],
+    },
+    {
+      text: "Demandes par nature",
+      icon: "bx bx-home-alt",
+      link: "/demandes/nature",
       authorization: ["Direction des Achats"],
     },
   ];

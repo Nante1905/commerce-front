@@ -1,26 +1,36 @@
-import "./demande-proforma-root.component.scss";
 import "../../../demande/containers/demande-nature-root/demande-nature-root.component.scss";
+import "./demande-proforma-root.component.scss";
 
-import { useDispatch, useSelector } from "react-redux";
-import Title from "../../../title/title.component";
-import { DemandeStore } from "../../../demande/store/demande.store";
+import { Alert, Button, Snackbar } from "@mui/material";
+import _ from "lodash";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 import { apiUrl } from "../../../../env";
-import { DemandeParNature } from "../../../shared/types/demande.type";
+import DemandeNature from "../../../demande/components/demande-nature/demande-nature.component";
+import { DemandeStore } from "../../../demande/store/demande.store";
 import {
   setChecking,
   setDemandeNature,
 } from "../../../demande/store/slice/demandeNature.slice";
-import DemandeNature from "../../../demande/components/demande-nature/demande-nature.component";
-import { Alert, Button, Snackbar } from "@mui/material";
+import { httpClient } from "../../../shared/services/interceptor/axios.interceptor";
+import { DemandeParNature } from "../../../shared/types/demande.type";
+import Title from "../../../title/title.component";
 import ProformaModal from "../../components/proforma-modal/proforma-modal.component";
+import {
+  findFournisseurOf,
+  sendDemande,
+} from "../../services/proforma.service";
+import { ProformaState, initialState } from "../../types/proforma.types";
 
 const DemandeProformaRoot = () => {
   document.title = "Besoin par nature";
   const demandes = useSelector(
     (state: DemandeStore) => state.demandeNature.demandes
   );
+
+  const [proformaState, setProformaState] =
+    useState<ProformaState>(initialState);
+
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -28,21 +38,16 @@ const DemandeProformaRoot = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("LOADING DATA");
-
-    axios
+    httpClient
       .get(`${apiUrl}/demandes/nature/valide`)
       .then((res) => {
         const response = res.data;
 
         if (response.ok) {
-          console.log("SETTING");
-          console.log(response.data);
           const data: DemandeParNature[] = response.data;
 
           dispatch(setDemandeNature(data));
           dispatch(setChecking(false));
-          console.log(demandes);
         } else {
           setError(response.error);
         }
@@ -52,40 +57,70 @@ const DemandeProformaRoot = () => {
       });
   }, []);
 
-  const sendProforma = () => {
-    console.log("opening modal");
+  useEffect(() => {
+    setProformaState((state: ProformaState) => ({
+      ...state,
+      articlesIds: demandes.map((d) => d.article.id),
+      demandesIds: _.uniq(
+        demandes.map((d) => d.details.map((d) => d.idDemande)).flat()
+      ),
+    }));
 
+    findFournisseurOf(proformaState.articlesIds)
+      .then((res) => {
+        if (res.data.ok) {
+          setProformaState((proformaState: ProformaState) => ({
+            ...proformaState,
+            fournisseurs: res.data.data,
+          }));
+          console.log(res.data);
+        } else {
+          console.log(res.data);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, [demandes]);
+
+  const sendProforma = () => {
     setOpenModal(true);
-    // let selected: SelectedDetails[] = [];
-    // let rejected: SelectedDetails[] = [];
-    // let idDemandes = new Set();
-    // demandes.map((d) => {
-    //   d.details.map((details) => {
-    //     if (details.selected) {
-    //       selected.push({ article: d.article.id, demande: details.idDemande });
-    //     } else {
-    //       rejected.push({ article: d.article.id, demande: details.idDemande });
-    //     }
-    //     idDemandes.add(details.idDemande);
-    //   });
-    // });
-    // axios
-    //   .post(`${apiUrl}/demandes/validation`, {
-    //     selected,
-    //     rejected,
-    //   })
-    //   .then((res) => {
-    //     const response = res.data;
-    //     console.log(response);
-    //     if (response.ok) {
-    //       setMessage(response.message);
-    //     } else {
-    //       setError(response.error);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
+    console.log(proformaState);
+  };
+
+  const handleSubmitModal = (fournisseurs: number[], livraison: string) => {
+    console.log(livraison, fournisseurs, proformaState.demandesIds);
+    if (fournisseurs.length < 3 && proformaState.fournisseurs.length >= 3) {
+      setProformaState((state) => ({
+        ...state,
+        formError: true,
+      }));
+      return false;
+    }
+
+    setProformaState((state) => ({
+      ...state,
+      modal: {
+        ...state.modal,
+        sendLoading: true,
+      },
+    }));
+
+    sendDemande(livraison, fournisseurs, proformaState.demandesIds)
+      .then((res) => {
+        console.log(res);
+        if (res.data.ok) {
+          setProformaState((state) => ({
+            ...state,
+            modal: {
+              sendLoading: false,
+              sendSuccess: true,
+              message: res.data.message,
+            },
+          }));
+        } else {
+          setError(res.data.error);
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -102,7 +137,13 @@ const DemandeProformaRoot = () => {
           </div>
         )}
       </div>
-      <ProformaModal open={openModal} />
+      <ProformaModal
+        fournisseurs={proformaState.fournisseurs}
+        open={openModal}
+        closeModal={() => setOpenModal(false)}
+        onModalSubmit={handleSubmitModal}
+        modal={proformaState.modal}
+      />
       <Snackbar
         open={message != null}
         onClose={() => {
@@ -128,6 +169,14 @@ const DemandeProformaRoot = () => {
       >
         <Alert severity="error" onClose={() => setError(null)}>
           {error}
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={proformaState.formError}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert severity="error" onClose={() => setError(null)}>
+          "Vous devez choisir au moins 3 fournisseurs
         </Alert>
       </Snackbar>
     </>

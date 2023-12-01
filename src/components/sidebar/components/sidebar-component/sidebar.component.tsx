@@ -1,7 +1,8 @@
 import { useRef } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthenticationStore } from "../../../authentication/store/authentication.store";
+import { NavItem } from "../../types/navItem.type";
 import NavItemComponent from "../nav-item/nav-item.component";
 import "./sidebar.component.scss";
 
@@ -12,6 +13,7 @@ interface SidebarProps {
 
 const SidebarComponent = ({ children, navItems }: SidebarProps) => {
   const sidebarRef = useRef<HTMLElement>(null);
+  const navigate = useNavigate();
 
   const employe = useSelector(
     (state: AuthenticationStore) => state.authentication.user
@@ -109,7 +111,13 @@ const SidebarComponent = ({ children, navItems }: SidebarProps) => {
                 color: "#ffffff",
               }}
             >
-              <a href="#">
+              <a
+                href="#"
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  navigate("/");
+                }}
+              >
                 <i className="bx bx-log-out icon"></i>
                 <span className="text nav-text">Logout</span>
               </a>
