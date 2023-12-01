@@ -1,3 +1,4 @@
+import { Article } from "../../../types/item.type";
 import { Fournisseur } from "../../shared/types/model.types";
 
 export interface ProformaState {
@@ -37,4 +38,10 @@ export interface DemandeProformaDetails {
   reference: string;
   demandeProforma: DemandeProforma;
   etat: number;
+}
+
+export interface DetailsResultatProforma {
+  article: { id: number };
+  quantiteDispo: number;
+  pu: number;
 }

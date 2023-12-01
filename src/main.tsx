@@ -12,6 +12,7 @@ import DemandeNatureRoot from "./components/demande/containers/demande-nature-ro
 import { demandeStore } from "./components/demande/store/demande.store.ts";
 import DemandeProformaListRoot from "./components/proforma/containers/demande-proforma-list-root/demande-profoma-list-root.tsx";
 import DemandeProformaRoot from "./components/proforma/containers/demande-proforma-root/demande-proforma-root.component.tsx";
+import SaisieReponseProformaRoot from "./components/proforma/containers/saisie-reponse-proforma-root/saisie-reponse-proforma-root.tsx";
 import LoginProtection from "./components/shared/components/login-protection/LoginProtection.tsx";
 import Title from "./components/title/title.component.tsx";
 import "./index.css";
@@ -79,8 +80,16 @@ const routes = createBrowserRouter([
         element: <DemandeProformaListRoot />,
       },
       {
+        path: "proforma/:id/reponse",
+        element: <SaisieReponseProformaRoot />,
+      },
+      {
         path: "/test",
-        element: <></>,
+        element: (
+          <>
+            <SaisieReponseProformaRoot />
+          </>
+        ),
       },
     ],
   },

@@ -1,0 +1,12 @@
+.saisie-proforma {
+  display: flex;
+  justify-content: center;
+  .form {
+    width: 60%;
+    .details {
+      display: flex;
+      justify-content: space-evenly;
+      padding-block: 1rem;
+    }
+  }
+}

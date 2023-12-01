@@ -18,3 +18,10 @@ export const sendDemande = (
 
 export const findProformaSansReponse = () =>
   httpClient.get("/proforma/sans-reponse");
+
+export const sendReponse = (id, form) =>
+  httpClient.post(`/proforma/${id}/reponse`, {
+    delaiLivraison: form.delaiLivraison,
+    formatPrix: form.formatPrix,
+    details: form.details,
+  });
