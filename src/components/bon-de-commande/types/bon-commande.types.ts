@@ -1,6 +1,11 @@
 import { Article } from "../../../types/item.type";
 import { Fournisseur } from "../../shared/types/model.types";
 
+export interface ModePaiement {
+  id: number;
+  nom: string;
+}
+
 export interface BonCommande {
   id: number;
   reference: string;
@@ -8,7 +13,7 @@ export interface BonCommande {
   livraisonPartielle: boolean;
   delaiLivraison: string;
   status: number;
-  paiement: number;
+  paiement: ModePaiement;
   fournisseur: Fournisseur;
   details: BonCommandeDetails[];
 }
