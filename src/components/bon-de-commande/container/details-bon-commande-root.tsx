@@ -11,6 +11,8 @@ const DetailsBonCommandeRoot = () => {
   useEffect(() => {
     findBonCommandeById(params.id as string)
       .then((res) => {
+        console.log(res.data.data);
+
         setState((state) => ({
           ...state,
           bonCommande: res.data.data,
