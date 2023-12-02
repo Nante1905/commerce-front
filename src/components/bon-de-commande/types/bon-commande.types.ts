@@ -8,7 +8,7 @@ export interface BonCommande {
   livraisonPartielle: boolean;
   delaiLivraison: string;
   status: number;
-  paiement: number;
+  paiement: ModePaiement;
   fournisseur: Fournisseur;
   details: BonCommandeDetails[];
 }
@@ -20,4 +20,9 @@ export interface BonCommandeDetails {
   puHt: number;
   puTTC: number;
   tva: number;
+}
+
+export interface ModePaiement {
+  id: number;
+  nom: string;
 }

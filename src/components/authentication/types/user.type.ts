@@ -8,6 +8,7 @@ export interface User {
   dateEmbauche: string;
   email: string;
   direction: Direction;
+  authorities: string[];
 }
 
 export interface UserCredentials {

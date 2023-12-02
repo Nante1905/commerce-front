@@ -108,7 +108,7 @@ const DetailsBonCommandeComponent = (props: DetailsBonCommandeProps) => {
             <TableBody>
               <TableRow>
                 <TableCell>
-                  {bonCommande?.paiement || "En attente de validation"}
+                  {bonCommande?.paiement.nom || "En attente de validation"}
                 </TableCell>
                 <TableCell> {bonCommande?.delaiLivraison} </TableCell>
               </TableRow>

@@ -1,5 +1,6 @@
 import {
   Button,
+  Chip,
   Table,
   TableBody,
   TableCell,
@@ -31,7 +32,6 @@ const ListBonCommandeComponent = () => {
     <div className="list-bon-commande">
       <header>
         <Title text="Liste bon de commande" />
-        <h5>Non validés</h5>
       </header>
       <section className="table">
         <Table>
@@ -58,9 +58,15 @@ const ListBonCommandeComponent = () => {
                   </Link>
                 </TableCell>
                 <TableCell>
-                  <Button variant="contained" color="success">
-                    Valider
-                  </Button>
+                  {bon.paiement ? (
+                    <Chip label="Validé" color="success" />
+                  ) : (
+                    <Link to={`/bon-commandes/${bon.id}/valider`}>
+                      <Button variant="contained" color="success">
+                        Valider
+                      </Button>
+                    </Link>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
