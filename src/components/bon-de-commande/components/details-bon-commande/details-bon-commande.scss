@@ -1,0 +1,44 @@
+.details-bon-commande {
+  .commande {
+    margin: 1rem;
+    padding: 3rem;
+
+    .en-tete {
+      .title {
+        text-align: center;
+      }
+
+      .details,
+      .fournisseur {
+        margin-block: 1rem;
+      }
+      .fournisseur {
+        h3 {
+          background-color: rgb(106, 106, 174);
+          color: #ffff;
+          padding: 0.2rem;
+          width: 30%;
+        }
+      }
+    }
+
+    .info-table,
+    .detail-table {
+      margin-block: 1rem;
+      th,
+      td {
+        border: solid 1px #000;
+      }
+
+      th,
+      .row-info {
+        background-color: rgb(106, 106, 174);
+        color: #ffff;
+        padding: 0.2rem;
+      }
+      .none-cell {
+        border: none;
+      }
+    }
+  }
+}

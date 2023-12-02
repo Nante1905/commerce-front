@@ -5,6 +5,8 @@ import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import SignIn from "./components/authentication/components/signin/SignIn.component.tsx";
 import { authenticationStore } from "./components/authentication/store/authentication.store.ts";
+import ListBonCommandeComponent from "./components/bon-de-commande/components/list-bon-commande/list-bon-commande.tsx";
+import DetailsBonCommandeRoot from "./components/bon-de-commande/container/details-bon-commande-root.tsx";
 import DemandeDetailsRoot from "./components/demande/containers/demande-details-root/demande-details-root.component.tsx";
 import DemandeFormRoot from "./components/demande/containers/demande-form-root/demande-form-root.component.tsx";
 import DemandeListRoot from "./components/demande/containers/demande-list-root/demande-list-root.component.tsx";
@@ -89,10 +91,18 @@ const routes = createBrowserRouter([
         element: <SaisieReponseProformaRoot />,
       },
       {
+        path: "bon-commandes",
+        element: <ListBonCommandeComponent />,
+      },
+      {
+        path: "bon-commandes/:id",
+        element: <DetailsBonCommandeRoot />,
+      },
+      {
         path: "/test",
         element: (
           <>
-            <ProformaReponseListComponent />
+            <DetailsBonCommandeRoot />
           </>
         ),
       },
