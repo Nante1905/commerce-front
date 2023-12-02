@@ -62,6 +62,16 @@ const DetailsBonCommandeComponent = (props: DetailsBonCommandeProps) => {
             <h1>Bon de commande</h1>
           </div>
           <div className="details">
+            <img src="/spring-3.svg" alt="" />
+            <p>
+              <strong>Spring industries </strong>
+              <br />
+              Andoharanofotsy, Antananarivo
+              <br />
+              0321234567
+            </p>
+            <br />
+            <br />
             <p>
               <strong>Date : </strong>
               {new Date(bonCommande?.dateCreation).toLocaleDateString("fr-FR")}
@@ -112,7 +122,10 @@ const DetailsBonCommandeComponent = (props: DetailsBonCommandeProps) => {
                 <TableCell>Quantité</TableCell>
                 <TableCell>Designation</TableCell>
                 <TableCell>PU HT</TableCell>
+                <TableCell>TVA</TableCell>
+                <TableCell>PU TTC</TableCell>
                 <TableCell>Total HT</TableCell>
+                <TableCell>Total TTC</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -121,35 +134,31 @@ const DetailsBonCommandeComponent = (props: DetailsBonCommandeProps) => {
                   <TableCell> {details.quantite.toLocaleString()} </TableCell>
                   <TableCell>{details.article.designation}</TableCell>
                   <TableCell>{details.puHt.toLocaleString()}</TableCell>
+                  <TableCell>{details.tva.toLocaleString()}</TableCell>
+                  <TableCell>{details.puTTC.toLocaleString()}</TableCell>
                   <TableCell>
                     {(details.puHt * details.quantite).toLocaleString()}
+                  </TableCell>
+                  <TableCell>
+                    {(details.puTTC * details.quantite).toLocaleString()}
                   </TableCell>
                 </TableRow>
               ))}
               <TableRow>
-                <TableCell className="none-cell"></TableCell>
-                <TableCell className="none-cell"></TableCell>
-                <TableCell className="row-info">Total HT</TableCell>
-                <TableCell>
-                  {bonCommande?.details
-                    .reduce((i, detail) => i + detail.puHt * detail.quantite, 0)
-                    .toLocaleString()}
+                <TableCell className="row-info" colSpan={3}>
+                  TOTAUX
                 </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="none-cell"></TableCell>
-                <TableCell className="none-cell"></TableCell>
-                <TableCell className="row-info">TVA</TableCell>
                 <TableCell>
                   {bonCommande?.details
                     .reduce((i, detail) => i + detail.tva * detail.quantite, 0)
                     .toLocaleString()}
                 </TableCell>
-              </TableRow>
-              <TableRow>
                 <TableCell className="none-cell"></TableCell>
-                <TableCell className="none-cell"></TableCell>
-                <TableCell className="row-info">Total TTC</TableCell>
+                <TableCell>
+                  {bonCommande?.details
+                    .reduce((i, detail) => i + detail.puHt * detail.quantite, 0)
+                    .toLocaleString()}
+                </TableCell>
                 <TableCell>
                   {bonCommande?.details
                     .reduce(

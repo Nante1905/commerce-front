@@ -30,7 +30,7 @@ const SidebarComponent = ({ children, navItems }: SidebarProps) => {
         <header>
           <div className="image-text">
             <span className="image">
-              <img src="/vite.svg" alt="" />
+              <img src="/spring-3.svg" alt="" />
             </span>
 
             <div className="text logo-text">
