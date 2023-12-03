@@ -19,6 +19,12 @@ const SidebarRoot = ({ children }: SidebarRootProps) => {
       link: "/demandes/nature",
       authorization: ["Direction des Achats"],
     },
+    {
+      text: "Etat de stock",
+      icon: "bx bx-home-alt",
+      link: "/etat-stock",
+      authorization: ["Magasin", "Direction Financière"],
+    },
   ];
 
   return <SidebarComponent navItems={navs}>{children}</SidebarComponent>;

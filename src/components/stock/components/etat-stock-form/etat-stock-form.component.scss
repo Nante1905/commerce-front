@@ -1,0 +1,10 @@
+.stock_form_container {
+    width: 80%;
+    margin: auto;
+    .form {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+    }
+}

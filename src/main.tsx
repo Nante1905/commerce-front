@@ -20,6 +20,7 @@ import SaisieReponseProformaRoot from "./components/proforma/containers/saisie-r
 import LoginProtection from "./components/shared/components/login-protection/LoginProtection.tsx";
 import Title from "./components/title/title.component.tsx";
 import "./index.css";
+import EtatStockRoot from "./components/stock/containers/etat-stock-root/etat-stock-root.component.tsx";
 
 const routes = createBrowserRouter([
   {
@@ -102,6 +103,10 @@ const routes = createBrowserRouter([
       {
         path: "bon-commandes/:id/valider",
         element: <ValidateBonCommandeComponent />,
+      },
+      {
+        path: "etat-stock",
+        element: <EtatStockRoot />,
       },
       {
         path: "/test",
