@@ -19,6 +19,7 @@ import DemandeProformaListRoot from "./components/proforma/containers/demande-pr
 import DemandeProformaRoot from "./components/proforma/containers/demande-proforma-root/demande-proforma-root.component.tsx";
 import SaisieReponseProformaRoot from "./components/proforma/containers/saisie-reponse-proforma-root/saisie-reponse-proforma-root.tsx";
 import LoginProtection from "./components/shared/components/login-protection/LoginProtection.tsx";
+import EtatStockRoot from "./components/stock/containers/etat-stock-root/etat-stock-root.component.tsx";
 import Title from "./components/title/title.component.tsx";
 import "./index.css";
 
@@ -107,6 +108,10 @@ const routes = createBrowserRouter([
       {
         path: "bon-livraison/saisie",
         element: <BonLivraisonFromRoot />,
+      },
+      {
+        path: "etat-stock",
+        element: <EtatStockRoot />,
       },
       {
         path: "/test",

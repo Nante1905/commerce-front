@@ -1,0 +1,28 @@
+.stock {
+    padding: 5rem 0rem;
+    .en-tete {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        row-gap: 1.5rem;
+
+        .title {
+            font-size: 1.75rem;
+        }
+    }
+    .etat-stock-table {
+        width: 90%;
+        margin: 2rem auto;
+        .table_head {
+            th{
+                font-weight: bold;
+            }
+        }
+    }
+}
+.row-info {
+    background-color: rgb(106, 106, 174);
+    color: #ffff;
+    padding: 0.2rem;
+  }
