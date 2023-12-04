@@ -9,6 +9,7 @@ import ListBonCommandeComponent from "./components/bon-de-commande/components/li
 import ValidateBonCommandeComponent from "./components/bon-de-commande/components/validate-bon-commande/validate-bon-commande.tsx";
 import DetailsBonCommandeRoot from "./components/bon-de-commande/container/details-bon-commande-root.tsx";
 import BonLivraisonFromRoot from "./components/bon-livraison/container/bon-livraison-form-root/bon-livraison-form-root.tsx";
+import BonLivraisonListRoot from "./components/bon-livraison/container/bon-livraison-list-root/bon-livraison-list-root.tsx";
 import DemandeDetailsRoot from "./components/demande/containers/demande-details-root/demande-details-root.component.tsx";
 import DemandeFormRoot from "./components/demande/containers/demande-form-root/demande-form-root.component.tsx";
 import DemandeListRoot from "./components/demande/containers/demande-list-root/demande-list-root.component.tsx";
@@ -115,7 +116,11 @@ const routes = createBrowserRouter([
       },
       {
         path: "/test",
-        element: <></>,
+        element: (
+          <>
+            <BonLivraisonListRoot />
+          </>
+        ),
       },
     ],
   },
