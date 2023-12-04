@@ -12,5 +12,5 @@ export interface Article {
     id: number,
     reference?: string,
     designation?: string,
-    categorie: Categorie
+    categorie?: Categorie
 }

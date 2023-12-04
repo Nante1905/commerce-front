@@ -21,6 +21,7 @@ import LoginProtection from "./components/shared/components/login-protection/Log
 import Title from "./components/title/title.component.tsx";
 import "./index.css";
 import EtatStockRoot from "./components/stock/containers/etat-stock-root/etat-stock-root.component.tsx";
+import SortieStockRoot from "./components/stock/containers/sortie-stock-root/sortie-stock-root.component.tsx";
 
 const routes = createBrowserRouter([
   {
@@ -107,6 +108,10 @@ const routes = createBrowserRouter([
       {
         path: "etat-stock",
         element: <EtatStockRoot />,
+      },
+      {
+        path: "sortie-stock",
+        element: <SortieStockRoot />,
       },
       {
         path: "/test",

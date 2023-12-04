@@ -139,7 +139,7 @@ const initialState: DetailsArticleQteState = {
   },
 };
 
-interface DetailsArticleQteType {
+export interface DetailsArticleQteType {
   article: { id: number };
   quantiteDispo: number;
   pu: number;
