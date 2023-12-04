@@ -25,6 +25,9 @@ import EtatStockRoot from "./components/stock/containers/etat-stock-root/etat-st
 import Title from "./components/title/title.component.tsx";
 import SortieStockRoot from "./components/stock/containers/sortie-stock-root/sortie-stock-root.component.tsx";
 import "./index.css";
+import BonSortieListRoot from "./components/stock/containers/bon-sortie-list/bon-sortie-list-root.component.tsx";
+import BonSortieComponent from "./components/stock/components/bon-sortie/bon-sortie-component.component.tsx";
+import BonSortieRoot from "./components/stock/containers/bon-sortie/bon-sortie-root.component.tsx";
 
 const routes = createBrowserRouter([
   {
@@ -127,6 +130,14 @@ const routes = createBrowserRouter([
       {
         path: "sortie-stock",
         element: <SortieStockRoot />,
+      },
+      {
+        path: "bon-sortie",
+        element: <BonSortieListRoot />,
+      },
+      {
+        path: "bon-sortie/:id",
+        element: <BonSortieRoot />,
       },
       {
         path: "/test",

@@ -1,0 +1,25 @@
+.bon-sortie {
+    img {
+      width: 50px;
+      height: 50px;
+    }
+    section {
+      padding: 3rem;
+    }
+    .info {
+      margin-block: 2rem;
+    }
+    .table {
+        width: 75%;
+        margin: auto;
+        .table-head-row {
+            background: darkgray;
+        }
+    }
+    .actions {
+        margin: 2rem;
+        display: flex;
+        justify-content: space-around;
+    }
+  }
+  

@@ -1,4 +1,5 @@
 import { Article, Direction } from "../../../types/item.type"
+import { Employe } from "../../shared/types/model.types"
 
 export interface DetailsEtatStock {
     article: Article,
@@ -40,5 +41,13 @@ export interface SortieStock {
     jour: string | null,
     type: TypeSortie | null,
     destinataire: Direction | null,
-    details: DetailsSortieStock[]
+    details: DetailsSortieStock[],
+    employe?: Employe,
+    direction?: Direction
+}
+
+export interface BonSortie {
+    id: number,
+    reference: string,
+    sortie: SortieStock,
 }

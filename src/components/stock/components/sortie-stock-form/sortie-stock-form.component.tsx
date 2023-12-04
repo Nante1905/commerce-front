@@ -199,6 +199,7 @@ const SortieStockForm = (props: SortieStockFormProps) => {
           </div>
           <h4 className="center subtitle ">Détails</h4>
           <DetailsArticleQte
+            withPu={false}
             articles={articles}
             onDataChange={(data) => {
               setState((state) => ({
