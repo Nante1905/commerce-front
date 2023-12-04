@@ -29,6 +29,9 @@ import BonSortieListRoot from "./components/stock/containers/bon-sortie-list/bon
 import BonSortieComponent from "./components/stock/components/bon-sortie/bon-sortie-component.component.tsx";
 import BonSortieRoot from "./components/stock/containers/bon-sortie/bon-sortie-root.component.tsx";
 import EntreStockFormRoot from "./components/stock/containers/entre-stock-form-root/entre-stock-form-root.component.tsx";
+import BonEntreRoot from "./components/stock/containers/bon-entre/bon-entre-root.component.tsx";
+import BonEntreListRoot from "./components/stock/containers/bon-entre-list/bon-entre-list-root.component.tsx";
+import DispatchListRoot from "./components/dispatch/containers/dispatch-list/dispatch-list-root.component.tsx";
 
 const routes = createBrowserRouter([
   {
@@ -143,6 +146,18 @@ const routes = createBrowserRouter([
       {
         path: "entre-stock",
         element: <EntreStockFormRoot />,
+      },
+      {
+        path: "bon-entree",
+        element: <BonEntreListRoot />,
+      },
+      {
+        path: "bon-entree/:id",
+        element: <BonEntreRoot />,
+      },
+      {
+        path: "dispatch",
+        element: <DispatchListRoot />,
       },
       {
         path: "/test",

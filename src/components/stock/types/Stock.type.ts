@@ -58,6 +58,8 @@ export interface BonSortie {
     id: number,
     reference: string,
     sortie: SortieStock,
+    status?: number,
+    statusString?: string
 }
 
 export interface BonReceptionDetails extends DetailsSortieStock { }
@@ -72,6 +74,7 @@ export interface BonReception {
 
 export interface BonEntre {
     id: number,
+    jour: string,
     reference: string,
-    entre: EntreStock
+    entreStock: EntreStock
 }
