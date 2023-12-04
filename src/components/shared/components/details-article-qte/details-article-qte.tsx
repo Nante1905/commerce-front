@@ -125,7 +125,7 @@ const DetailsArticleQte = (props: DetailsArticleQteProps) => {
               <TextField
                 label="prix unitaire"
                 onChange={(event) => handleChangePu(index, event, state)}
-                value={detail.pu}
+                value={detail.puHt as number}
               />
             ) : (
               <></>
@@ -164,6 +164,8 @@ export interface DetailsArticleQteType {
   article: { id: number };
   qte: number;
   pu?: number;
+  puHt?: number;
+  puTTC?: number;
 }
 
 interface DetailsArticleQteProps {

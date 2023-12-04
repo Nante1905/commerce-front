@@ -1,5 +1,6 @@
 import { Article } from "../../../types/item.type";
 import { BonCommande } from "../../bon-de-commande/types/bon-commande.types";
+import { DetailsArticleQteType } from "../components/details-article-qte/details-article-qte";
 
 export interface Fournisseur {
   id: number;
@@ -39,4 +40,13 @@ export interface BonLivraison {
 interface BonLivraisonDetail {
   article: Article;
   qte: number;
+}
+
+export interface Facture {
+  id: number;
+  formatPrix: number;
+  reference: string;
+  bonDeCommande: BonCommande;
+  jour: string;
+  details: DetailsArticleQteType[];
 }

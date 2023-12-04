@@ -16,6 +16,7 @@ import DemandeFormRoot from "./components/demande/containers/demande-form-root/d
 import DemandeListRoot from "./components/demande/containers/demande-list-root/demande-list-root.component.tsx";
 import DemandeNatureRoot from "./components/demande/containers/demande-nature-root/demande-nature-root.component.tsx";
 import { demandeStore } from "./components/demande/store/demande.store.ts";
+import FactureFormRoot from "./components/facture/container/facture-form-root/facture-form-root.tsx";
 import ProformaReponseListComponent from "./components/proforma/components/proforma-reponse-list/proforma-reponse-list.tsx";
 import DemandeProformaListRoot from "./components/proforma/containers/demande-proforma-list-root/demande-profoma-list-root.tsx";
 import DemandeProformaRoot from "./components/proforma/containers/demande-proforma-root/demande-proforma-root.component.tsx";
@@ -125,7 +126,11 @@ const routes = createBrowserRouter([
       },
       {
         path: "/test",
-        element: <></>,
+        element: (
+          <>
+            <FactureFormRoot />
+          </>
+        ),
       },
     ],
   },

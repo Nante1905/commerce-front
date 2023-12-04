@@ -14,88 +14,72 @@ import { Dayjs } from "dayjs";
 import { FormEvent, useState } from "react";
 import { Article } from "../../../../types/item.type";
 import { BonCommande } from "../../../bon-de-commande/types/bon-commande.types";
+import { bonCommandeDetailsToArticleQteDetails } from "../../../bon-livraison/utils/bon-livraison.utils";
 import DetailsArticleQte, {
   DetailsArticleQteType,
 } from "../../../shared/components/details-article-qte/details-article-qte";
 import Title from "../../../title/title.component";
-import { insertBonLivraison } from "../../services/bon-livraison.service";
-import { bonCommandeDetailsToArticleQteDetails } from "../../utils/bon-livraison.utils";
-import "./bon-livraison-form.scss";
+import { insertFacture } from "../../services/facture.service";
+import "./facture-form.scss";
 
-const BonLivraisonFormComponent = (props: BonLivraisonFormComponentProps) => {
-  const [state, setState] = useState(initialState);
+const FactureFormComponent = (props: FactureFormComponentProps) => {
+  const [state, setState] = useState<FactureFormComponentState>(initialState);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    insertBonLivraison(state.form)
+    insertFacture(state.form)
       .then((res) => {
-        console.log(res);
-        if (res.data.data.ok) {
-          setState((state) => ({
-            ...state,
-            insertSuccess: true,
-            insertMessage: res.data.data.message,
-          }));
-        } else if (res.data.data.ok === false) {
-          setState((state) => ({
-            ...state,
-            insertFail: true,
-            insertMessage: res.data.data.err,
-          }));
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-
         setState((state) => ({
           ...state,
-          insertFail: true,
-          insertMessage: err.response.data.err || err.response.data,
+          insertError: false,
+          insertSuccess: true,
+          insertMessage: res.data.message,
+        }));
+      })
+      .catch((err) => {
+        setState((state) => ({
+          ...state,
+          insertError: true,
+          insertSuccess: false,
+          insertMessage: err.response.data.message,
         }));
       });
   };
 
   return (
-    <div className="bon-livraison-form">
-      <header>
-        <Title text="Saisie bon de livraison" />
-      </header>
-      <section>
+    <div className="facture-form">
+      <div className="header">
+        <Title text="Saisie facture" />
+      </div>
+      <div className="content">
         <div className="form">
           <form onSubmit={(event) => handleSubmit(event)}>
             <div className="form-item">
-              <TextField
-                label="Reference"
-                onChange={(event) =>
-                  setState((state) => ({
-                    ...state,
-                    form: {
-                      ...state.form,
-                      reference: event.target.value,
-                    },
-                  }))
-                }
-              />
-            </div>
-            <div className="form-item">
-              <LocalizationProvider
-                dateAdapter={AdapterDayjs}
-                adapterLocale="en-gb"
-              >
-                <DatePicker
-                  label="Date"
-                  onChange={(value: Dayjs | null) =>
+              <FormControl className="input" sx={{ width: 200 }}>
+                <InputLabel id="select-label">Format Prix</InputLabel>
+
+                <Select
+                  labelId="select-label"
+                  id="select"
+                  label="Format prix"
+                  onChange={(event) => {
                     setState((state) => ({
                       ...state,
                       form: {
                         ...state.form,
-                        jourSortie: value?.format("YYYY-MM-DD") as string,
+                        formatPrix: event.target.value as number,
                       },
-                    }))
-                  }
-                  format="DD/MM/YYYY"
-                />
-              </LocalizationProvider>
+                    }));
+                  }}
+                  required
+                >
+                  <MenuItem value={0}>HT</MenuItem>
+                  <MenuItem value={1}>TTC</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div className="form-item">
+              <TextField label="Reference" />
             </div>
             <div className="form-item">
               <FormControl className="input" sx={{ width: 200 }}>
@@ -132,10 +116,29 @@ const BonLivraisonFormComponent = (props: BonLivraisonFormComponentProps) => {
               </FormControl>
             </div>
             <div className="form-item">
-              <h4>Details</h4>
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                adapterLocale="en-gb"
+              >
+                <DatePicker
+                  label="Date"
+                  onChange={(value: Dayjs | null) =>
+                    setState((state) => ({
+                      ...state,
+                      form: {
+                        ...state.form,
+                        jour: value?.format("YYYY-MM-DD") as string,
+                      },
+                    }))
+                  }
+                  format="DD/MM/YYYY"
+                />
+              </LocalizationProvider>
+            </div>
+            <div className="form-item">
               <DetailsArticleQte
+                withPu={true}
                 articles={props.articles}
-                withPu={false}
                 onDataChange={(data) => {
                   setState((state) => ({
                     ...state,
@@ -148,68 +151,59 @@ const BonLivraisonFormComponent = (props: BonLivraisonFormComponentProps) => {
                 details={state.form.details}
               />
             </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
+            <div className="form-item submit">
               <Button variant="contained" type="submit">
                 Valider
               </Button>
             </div>
           </form>
         </div>
-      </section>
-      <Snackbar open={state.insertSuccess || state.insertFail}>
-        <Alert
-          severity={state.insertSuccess ? "success" : "error"}
-          onClose={() => {
-            setState((state) => ({
-              ...state,
-              insertFail: false,
-              insertSuccess: false,
-            }));
-          }}
+        <Snackbar
+          open={state.insertSuccess || state.insertError}
+          autoHideDuration={6000}
         >
-          {state.insertMessage}
-        </Alert>
-      </Snackbar>
+          <Alert severity={state.insertSuccess ? "success" : "error"}>
+            {state.insertMessage}
+          </Alert>
+        </Snackbar>
+      </div>
     </div>
   );
 };
 
-export default BonLivraisonFormComponent;
+export default FactureFormComponent;
 
-interface BonLivraisonFormComponentProps {
+interface FactureFormComponentProps {
   articles: Article[];
   bonCommandes: BonCommande[];
 }
 
-interface BonLivraisonFormComponentState {
+interface FactureFormComponentState {
   form: {
+    formatPrix: number;
     reference: string;
     bonDeCommande: {
       id: number;
     };
-    jourSortie: string;
+    jour: string;
     details: DetailsArticleQteType[];
   };
+
   insertSuccess: boolean;
-  insertFail: boolean;
+  insertError: boolean;
   insertMessage: string;
 }
-
-const initialState: BonLivraisonFormComponentState = {
+const initialState: FactureFormComponentState = {
   form: {
+    formatPrix: 0,
     reference: "",
     bonDeCommande: {
       id: 0,
     },
-    jourSortie: "",
+    jour: "",
     details: [],
   },
+  insertError: false,
   insertSuccess: false,
-  insertFail: false,
   insertMessage: "",
 };
