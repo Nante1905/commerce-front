@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Article } from "../../../../types/item.type";
 import { BonCommande } from "../../../bon-de-commande/types/bon-commande.types";
 import { findAllArticles } from "../../../shared/services/shared.service";
+import BonLivraisonFormComponent from "../../components/bon-livraison-form/bon-livraison-form";
 import { findAllBonCommandeValides } from "../../services/bon-livraison.service";
-import BonLivraisonFormComponent from "../bon-livraison-form/bon-livraison-form";
 
 const BonLivraisonFromRoot = () => {
   const [state, setState] = useState(initialState);
