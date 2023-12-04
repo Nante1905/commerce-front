@@ -23,6 +23,7 @@ import SaisieReponseProformaRoot from "./components/proforma/containers/saisie-r
 import LoginProtection from "./components/shared/components/login-protection/LoginProtection.tsx";
 import EtatStockRoot from "./components/stock/containers/etat-stock-root/etat-stock-root.component.tsx";
 import Title from "./components/title/title.component.tsx";
+import SortieStockRoot from "./components/stock/containers/sortie-stock-root/sortie-stock-root.component.tsx";
 import "./index.css";
 
 const routes = createBrowserRouter([
@@ -122,6 +123,10 @@ const routes = createBrowserRouter([
       {
         path: "bon-livraison",
         element: <BonLivraisonListRoot />,
+      },
+      {
+        path: "sortie-stock",
+        element: <SortieStockRoot />,
       },
       {
         path: "/test",
