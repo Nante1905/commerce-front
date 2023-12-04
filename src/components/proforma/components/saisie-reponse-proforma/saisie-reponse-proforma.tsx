@@ -14,6 +14,7 @@ import DetailsArticleQte from "../../../shared/components/details-article-qte/de
 import { HT, TTC } from "../../constants/proforma.constant";
 import { sendReponse } from "../../services/proforma.service";
 import { DetailsResultatProforma } from "../../types/proforma.types";
+import { articleQteToResutltatProforma } from "../../utils/proforma.utils";
 import "./saisie-reponse-proforma.scss";
 
 const SaisieReponseProformaComponent = (props: SaisieReponseProformaProps) => {
@@ -87,7 +88,7 @@ const SaisieReponseProformaComponent = (props: SaisieReponseProformaProps) => {
                 ...state,
                 form: {
                   ...state.form,
-                  details: data,
+                  details: articleQteToResutltatProforma(data),
                 },
               }));
             }}

@@ -43,7 +43,7 @@ export interface DemandeProformaDetails {
 export interface DetailsResultatProforma {
   article: { id: number };
   quantiteDispo: number;
-  pu: number;
+  pu?: number;
 }
 
 export interface Proforma {

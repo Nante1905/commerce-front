@@ -7,7 +7,7 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Article } from "../../../../types/item.type";
 
 const DetailsArticleQte = (props: DetailsArticleQteProps) => {
@@ -33,7 +33,7 @@ const DetailsArticleQte = (props: DetailsArticleQteProps) => {
     state: DetailsArticleQteState
   ) => {
     const form = { ...state.form };
-    form.details[index].quantiteDispo = Number(event.target.value);
+    form.details[index].qte = Number(event.target.value);
     setState((state) => ({
       ...state,
       form: form,
@@ -61,7 +61,7 @@ const DetailsArticleQte = (props: DetailsArticleQteProps) => {
       article: {
         id: 1,
       },
-      quantiteDispo: 0,
+      qte: 0,
       pu: 0,
     });
     setState((state) => ({
@@ -81,6 +81,21 @@ const DetailsArticleQte = (props: DetailsArticleQteProps) => {
     props.onDataChange(state.form.details);
   };
 
+  // const details = (props: DetailsArticleQteProps): DetailsArticleQteType[] =>
+  //   props?.details ? props.details : state.form.details;
+
+  useEffect(() => {
+    if (props?.details) {
+      setState((state) => ({
+        ...state,
+        form: {
+          ...state.form,
+          details: props?.details as DetailsArticleQteType[],
+        },
+      }));
+    }
+  }, [props.details]);
+
   return (
     <div>
       {state.form.details.map((detail, index) => (
@@ -91,9 +106,9 @@ const DetailsArticleQte = (props: DetailsArticleQteProps) => {
               <Select
                 label="Article"
                 onChange={(event) => handleChangeArticle(index, event, state)}
-                value={state.form.details[index].article.id}
+                value={detail?.article.id}
               >
-                {props.articles.map((article, index) => (
+                {props?.articles?.map((article, index) => (
                   <MenuItem key={index + 1} value={article.id}>
                     {article.designation}
                   </MenuItem>
@@ -101,14 +116,20 @@ const DetailsArticleQte = (props: DetailsArticleQteProps) => {
               </Select>
             </FormControl>
             <TextField
-              label="Quantité disponible"
+              label="Quantité"
               onChange={(event) => handleChangeQte(index, event, state)}
+              value={detail.qte}
             />
 
-            <TextField
-              label="prix unitaire"
-              onChange={(event) => handleChangePu(index, event, state)}
-            />
+            {props.withPu ? (
+              <TextField
+                label="prix unitaire"
+                onChange={(event) => handleChangePu(index, event, state)}
+                value={detail.pu}
+              />
+            ) : (
+              <></>
+            )}
             <Button
               variant="outlined"
               onClick={() => handleDeleteElement(index)}
@@ -139,13 +160,15 @@ const initialState: DetailsArticleQteState = {
   },
 };
 
-interface DetailsArticleQteType {
+export interface DetailsArticleQteType {
   article: { id: number };
-  quantiteDispo: number;
-  pu: number;
+  qte: number;
+  pu?: number;
 }
 
 interface DetailsArticleQteProps {
   articles: Article[];
+  withPu?: boolean;
+  details?: DetailsArticleQteType[];
   onDataChange: (data: DetailsArticleQteType[]) => void;
 }
