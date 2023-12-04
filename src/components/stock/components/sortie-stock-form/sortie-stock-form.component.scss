@@ -1,0 +1,24 @@
+.sortie-info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;  
+    justify-content: center;
+    align-items: center;
+}
+
+.sortie-stock-form {
+    .details {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin: 1rem auto;
+    }
+    .subtitle {
+        margin: 2rem auto;
+    }
+    .actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

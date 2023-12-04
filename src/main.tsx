@@ -22,7 +22,10 @@ import DemandeProformaListRoot from "./components/proforma/containers/demande-pr
 import DemandeProformaRoot from "./components/proforma/containers/demande-proforma-root/demande-proforma-root.component.tsx";
 import SaisieReponseProformaRoot from "./components/proforma/containers/saisie-reponse-proforma-root/saisie-reponse-proforma-root.tsx";
 import LoginProtection from "./components/shared/components/login-protection/LoginProtection.tsx";
+import BonSortieListRoot from "./components/stock/containers/bon-sortie-list/bon-sortie-list-root.component.tsx";
+import BonSortieRoot from "./components/stock/containers/bon-sortie/bon-sortie-root.component.tsx";
 import EtatStockRoot from "./components/stock/containers/etat-stock-root/etat-stock-root.component.tsx";
+import SortieStockRoot from "./components/stock/containers/sortie-stock-root/sortie-stock-root.component.tsx";
 import Title from "./components/title/title.component.tsx";
 import "./index.css";
 
@@ -127,6 +130,18 @@ const routes = createBrowserRouter([
       {
         path: "facture/saisie",
         element: <FactureFormRoot />,
+      },
+      {
+        path: "sortie-stock",
+        element: <SortieStockRoot />,
+      },
+      {
+        path: "bon-sortie",
+        element: <BonSortieListRoot />,
+      },
+      {
+        path: "bon-sortie/:id",
+        element: <BonSortieRoot />,
       },
       {
         path: "/test",
