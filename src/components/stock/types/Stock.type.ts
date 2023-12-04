@@ -46,8 +46,32 @@ export interface SortieStock {
     direction?: Direction
 }
 
+export interface EntreStock {
+    id?: number,
+    jour: string | null,
+    bonReception: BonReception | null,
+    employe?: Employe,
+    details: DetailsSortieStock[]
+}
+
 export interface BonSortie {
     id: number,
     reference: string,
     sortie: SortieStock,
+}
+
+export interface BonReceptionDetails extends DetailsSortieStock { }
+
+export interface BonReception {
+    id: number,
+    reference?: string,
+    jour?: string,
+    employe?: Employe,
+    details?: BonReceptionDetails[]
+}
+
+export interface BonEntre {
+    id: number,
+    reference: string,
+    entre: EntreStock
 }

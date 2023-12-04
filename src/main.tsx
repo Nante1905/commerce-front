@@ -28,6 +28,7 @@ import "./index.css";
 import BonSortieListRoot from "./components/stock/containers/bon-sortie-list/bon-sortie-list-root.component.tsx";
 import BonSortieComponent from "./components/stock/components/bon-sortie/bon-sortie-component.component.tsx";
 import BonSortieRoot from "./components/stock/containers/bon-sortie/bon-sortie-root.component.tsx";
+import EntreStockFormRoot from "./components/stock/containers/entre-stock-form-root/entre-stock-form-root.component.tsx";
 
 const routes = createBrowserRouter([
   {
@@ -138,6 +139,10 @@ const routes = createBrowserRouter([
       {
         path: "bon-sortie/:id",
         element: <BonSortieRoot />,
+      },
+      {
+        path: "entre-stock",
+        element: <EntreStockFormRoot />,
       },
       {
         path: "/test",

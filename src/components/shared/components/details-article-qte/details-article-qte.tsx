@@ -11,6 +11,8 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Article } from "../../../../types/item.type";
 
 const DetailsArticleQte = (props: DetailsArticleQteProps) => {
+  console.log(props.details);
+
   const [state, setState] = useState<DetailsArticleQteState>(initialState);
 
   const handleChangeArticle = (
