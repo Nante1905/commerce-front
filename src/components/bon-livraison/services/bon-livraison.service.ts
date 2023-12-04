@@ -7,3 +7,5 @@ export const insertBonLivraison = (data: any) =>
   httpClient.post("/bon-livraison", data);
 
 export const findAllBonLivraisons = () => httpClient.get("/bon-livraison");
+export const findBonLivraison = (id: string) =>
+  httpClient.get("/bon-livraison/" + id);

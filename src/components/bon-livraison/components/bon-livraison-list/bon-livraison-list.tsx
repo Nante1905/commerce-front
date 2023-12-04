@@ -1,10 +1,12 @@
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import { BonLivraison } from "../../../shared/types/model.types";
 import Title from "../../../title/title.component";
 import "./bon-livraison-list.scss";
@@ -41,6 +43,13 @@ const BonLivraisonListComponent = (props: BonLivraisonListProps) => {
                       bon.employe.direction.code}
                   </TableCell>
                   <TableCell>{bon.jourReception}</TableCell>
+                  <TableCell>
+                    <Link to={"/bon-livraison/" + bon.id}>
+                      <Button variant="contained" color="primary">
+                        Details
+                      </Button>
+                    </Link>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

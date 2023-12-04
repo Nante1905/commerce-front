@@ -8,6 +8,7 @@ import { authenticationStore } from "./components/authentication/store/authentic
 import ListBonCommandeComponent from "./components/bon-de-commande/components/list-bon-commande/list-bon-commande.tsx";
 import ValidateBonCommandeComponent from "./components/bon-de-commande/components/validate-bon-commande/validate-bon-commande.tsx";
 import DetailsBonCommandeRoot from "./components/bon-de-commande/container/details-bon-commande-root.tsx";
+import BonLivraisonComponent from "./components/bon-livraison/components/bon-livraison/bon-livraison.tsx";
 import BonLivraisonFromRoot from "./components/bon-livraison/container/bon-livraison-form-root/bon-livraison-form-root.tsx";
 import BonLivraisonListRoot from "./components/bon-livraison/container/bon-livraison-list-root/bon-livraison-list-root.tsx";
 import DemandeDetailsRoot from "./components/demande/containers/demande-details-root/demande-details-root.component.tsx";
@@ -115,12 +116,16 @@ const routes = createBrowserRouter([
         element: <EtatStockRoot />,
       },
       {
+        path: "bon-livraison/:id",
+        element: <BonLivraisonComponent />,
+      },
+      {
+        path: "bon-livraison",
+        element: <BonLivraisonListRoot />,
+      },
+      {
         path: "/test",
-        element: (
-          <>
-            <BonLivraisonListRoot />
-          </>
-        ),
+        element: <></>,
       },
     ],
   },

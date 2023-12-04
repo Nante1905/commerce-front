@@ -34,6 +34,11 @@ httpClient.interceptors.response.use(
     if (err.response.status === 403) {
       authenticationStore.dispatch(authenticationActions.forbidden());
       console.log("Forbidden");
+    } else if (
+      err.response.status === 500 &&
+      err.response.data.message == "Invalid token"
+    ) {
+      authenticationStore.dispatch(authenticationActions.forbidden());
     }
     return Promise.reject(err);
   }
