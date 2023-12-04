@@ -125,12 +125,12 @@ const routes = createBrowserRouter([
         element: <BonLivraisonListRoot />,
       },
       {
+        path: "facture/saisie",
+        element: <FactureFormRoot />,
+      },
+      {
         path: "/test",
-        element: (
-          <>
-            <FactureFormRoot />
-          </>
-        ),
+        element: <></>,
       },
     ],
   },
