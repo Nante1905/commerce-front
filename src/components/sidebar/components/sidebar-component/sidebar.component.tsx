@@ -60,7 +60,7 @@ const SidebarComponent = ({ children, navItems }: SidebarProps) => {
               {navItems.map((navItem, index) => (
                 <NavItemComponent key={index} navItem={navItem} />
               ))}
-              <li className="nav-link">
+              {/* <li className="nav-link">
                 <a href="#">
                   <i className="bx bx-home-alt icon"></i>
                   <span className="text nav-text">Dashboard</span>
@@ -100,7 +100,7 @@ const SidebarComponent = ({ children, navItems }: SidebarProps) => {
                   <i className="bx bx-wallet icon"></i>
                   <span className="text nav-text">Wallets</span>
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
 

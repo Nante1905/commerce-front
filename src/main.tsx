@@ -64,10 +64,6 @@ const routes = createBrowserRouter([
         ),
       },
       {
-        path: "title",
-        element: <Title text={"Insertion de besoin"} />,
-      },
-      {
         path: "demandes/create",
         element: (
           <Provider store={demandeStore}>
