@@ -1,0 +1,10 @@
+@import "../../../../styles/color.scss";
+.bon-reception-list {
+  .table {
+    padding-inline: 1rem;
+    th {
+      font-weight: bold;
+      border-bottom: 2px solid $secondary-color;
+    }
+  }
+}

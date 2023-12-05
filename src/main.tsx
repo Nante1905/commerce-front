@@ -25,7 +25,9 @@ import ProformaReponseListComponent from "./components/proforma/components/profo
 import DemandeProformaListRoot from "./components/proforma/containers/demande-proforma-list-root/demande-profoma-list-root.tsx";
 import DemandeProformaRoot from "./components/proforma/containers/demande-proforma-root/demande-proforma-root.component.tsx";
 import SaisieReponseProformaRoot from "./components/proforma/containers/saisie-reponse-proforma-root/saisie-reponse-proforma-root.tsx";
+import BonReceptionComponent from "./components/reception/components/bon-reception/bon-reception.tsx";
 import BonReceptionFormRoot from "./components/reception/container/bon-reception-form-root/bon-reception-form-root.tsx";
+import BonReceptionListRoot from "./components/reception/container/bon-reception-list-root/bon-reception-list-root.tsx";
 import LoginProtection from "./components/shared/components/login-protection/LoginProtection.tsx";
 import BonEntreListRoot from "./components/stock/containers/bon-entre-list/bon-entre-list-root.component.tsx";
 import BonEntreRoot from "./components/stock/containers/bon-entre/bon-entre-root.component.tsx";
@@ -182,6 +184,14 @@ const routes = createBrowserRouter([
       {
         path: "bon-reception/saisie",
         element: <BonReceptionFormRoot />,
+      },
+      {
+        path: "bon-reception",
+        element: <BonReceptionListRoot />,
+      },
+      {
+        path: "bon-reception/:id",
+        element: <BonReceptionComponent />,
       },
       {
         path: "/test",
