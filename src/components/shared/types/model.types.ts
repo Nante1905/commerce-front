@@ -45,8 +45,12 @@ interface BonLivraisonDetail {
 export interface Facture {
   id: number;
   formatPrix: number;
+  employe: Employe;
   reference: string;
   bonDeCommande: BonCommande;
   jour: string;
-  details: DetailsArticleQteType[];
+  details: {
+    article: Article;
+    qte: number;
+  }[];
 }

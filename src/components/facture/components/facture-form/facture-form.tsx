@@ -5,6 +5,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
   Snackbar,
   TextField,
 } from "@mui/material";
@@ -46,6 +47,31 @@ const FactureFormComponent = (props: FactureFormComponentProps) => {
       });
   };
 
+  const handleChangeBonCommande = (event: SelectChangeEvent<unknown>) => {
+    const idBonCommande = event.target.value as number;
+    const bonCommande = props.bonCommandes.filter(
+      (b) => b.id == idBonCommande
+    )[0].details;
+    const bonCommandeDetails =
+      bonCommandeDetailsToArticleQteDetails(bonCommande);
+    setState((state) => ({
+      ...state,
+      form: {
+        ...state.form,
+        bonDeCommande: {
+          id: idBonCommande,
+        },
+        details: bonCommandeDetails.map((detail, index) => ({
+          ...detail,
+          pu:
+            state.form.formatPrix == 0
+              ? bonCommande[index].puHt
+              : bonCommande[index].puTTC,
+        })),
+      },
+    }));
+  };
+
   return (
     <div className="facture-form">
       <div className="header">
@@ -79,7 +105,18 @@ const FactureFormComponent = (props: FactureFormComponentProps) => {
               </FormControl>
             </div>
             <div className="form-item">
-              <TextField label="Reference" />
+              <TextField
+                label="Reference"
+                onChange={(event) => {
+                  setState((state) => ({
+                    ...state,
+                    form: {
+                      ...state.form,
+                      reference: event.target.value as string,
+                    },
+                  }));
+                }}
+              />
             </div>
             <div className="form-item">
               <FormControl className="input" sx={{ width: 200 }}>
@@ -90,20 +127,7 @@ const FactureFormComponent = (props: FactureFormComponentProps) => {
                   id="select"
                   label="Bon de commande"
                   onChange={(event) => {
-                    setState((state) => ({
-                      ...state,
-                      form: {
-                        ...state.form,
-                        bonDeCommande: {
-                          id: event.target.value as number,
-                        },
-                        details: bonCommandeDetailsToArticleQteDetails(
-                          props.bonCommandes.filter(
-                            (b) => b.id == event.target.value
-                          )[0].details
-                        ),
-                      },
-                    }));
+                    handleChangeBonCommande(event);
                   }}
                   required
                 >

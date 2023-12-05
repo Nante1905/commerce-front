@@ -125,7 +125,7 @@ const DetailsArticleQte = (props: DetailsArticleQteProps) => {
               <TextField
                 label="prix unitaire"
                 onChange={(event) => handleChangePu(index, event, state)}
-                value={detail.puHt as number}
+                value={detail.pu as number}
               />
             ) : (
               <></>
