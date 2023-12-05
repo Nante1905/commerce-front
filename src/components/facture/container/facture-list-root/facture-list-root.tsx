@@ -4,6 +4,8 @@ import FactureListComponent from "../../components/facture-list/facture-list";
 import { findAllFactures } from "../../services/facture.service";
 
 const FactureListRoot = () => {
+  document.title = "Liste des factures";
+
   const [state, setState] = useState<FactureListRootState>(initialState);
 
   useEffect(() => {

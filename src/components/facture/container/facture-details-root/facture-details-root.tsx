@@ -5,6 +5,8 @@ import FactureDetailsComponent from "../../components/facture-details/facture-de
 import { findAllFactureById } from "../../services/facture.service";
 
 const FactureDetailsRoot = () => {
+  document.title = "Détails facture";
+
   const [state, setState] = useState<FactureDetailsRootState>();
 
   const params = useParams<{ id: string }>();
