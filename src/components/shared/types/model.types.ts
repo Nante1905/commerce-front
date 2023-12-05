@@ -49,6 +49,8 @@ export interface Facture {
   reference: string;
   bonDeCommande: BonCommande;
   jour: string;
+  etat: number;
+  probleme: string[];
   details: {
     article: Article;
     qte: number;

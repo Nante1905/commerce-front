@@ -1,20 +1,24 @@
-import { CloudDownload } from "@mui/icons-material";
+import { Check, CloudDownload, WarningAmber } from "@mui/icons-material";
 import {
   Button,
+  Chip,
+  CircularProgress,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
 } from "@mui/material";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import generatePDF from "react-to-pdf";
 import { Facture } from "../../../shared/types/model.types";
 import Title from "../../../title/title.component";
+import { validerFacture } from "../../services/facture.service";
 import "./facture-details.scss";
 
 const FactureDetailsComponent = (props: FactureDetailsProps) => {
   const pdfRef = useRef<HTMLDivElement | null>(null);
+  const [state, setState] = useState<FactureDetailsState>(initialState);
 
   const getPDF = () => {
     generatePDF(pdfRef, {
@@ -22,12 +26,68 @@ const FactureDetailsComponent = (props: FactureDetailsProps) => {
     });
   };
 
+  const handleValider = (id: string) => {
+    setState((state) => ({
+      ...state,
+      validerLoading: true,
+    }));
+    validerFacture(id)
+      .then((res) => {
+        setState((state) => ({
+          ...state,
+          validerLoading: false,
+          validerSuccess: true,
+          validerMessage: res.data.message,
+        }));
+      })
+      .catch((err) => {
+        setState((state) => ({
+          ...state,
+          validerLoading: false,
+          validerFail: true,
+          validerMessage: err.response.data.message,
+        }));
+      });
+  };
+
+  const renderValiderButton = () => {
+    if (state.validerLoading) {
+      return (
+        <CircularProgress
+          style={{
+            width: "20px",
+            height: "20px",
+            color: "white",
+          }}
+        />
+      );
+    } else if (state.validerSuccess) {
+      return (
+        <Check
+          style={{
+            width: "20px",
+            height: "20px",
+            color: "white",
+          }}
+        />
+      );
+    } else {
+      return "Valider";
+    }
+  };
+
   return (
     <div className="facture-details">
       <header>
         <Title text="Details facture" />
       </header>
-      <Button variant="contained" onClick={() => getPDF()}>
+      <Button
+        variant="contained"
+        onClick={() => getPDF()}
+        style={{
+          marginInline: "2rem",
+        }}
+      >
         <CloudDownload
           style={{
             marginRight: ".5rem",
@@ -35,6 +95,35 @@ const FactureDetailsComponent = (props: FactureDetailsProps) => {
         />{" "}
         PDF
       </Button>
+      {props.facture?.etat === 0 ? (
+        <Button
+          variant="contained"
+          color="success"
+          onClick={() => handleValider(props.facture.id.toString())}
+        >
+          {renderValiderButton()}
+        </Button>
+      ) : (
+        <Chip label="Validé" color="success" />
+      )}
+      <br />
+      {props.facture?.probleme?.map((probleme, index) => (
+        <p
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBlock: ".5rem",
+          }}
+          key={index}
+        >
+          <WarningAmber
+            style={{
+              color: "red",
+            }}
+          />{" "}
+          {probleme}
+        </p>
+      ))}
       <div className="content" ref={pdfRef}>
         <h2>Facture</h2>
         <div className="info fournisseur">
@@ -129,3 +218,17 @@ export default FactureDetailsComponent;
 interface FactureDetailsProps {
   facture: Facture;
 }
+
+interface FactureDetailsState {
+  validerSuccess: boolean;
+  validerFail: boolean;
+  validerLoading: boolean;
+  validerMessage: string;
+}
+
+const initialState: FactureDetailsState = {
+  validerSuccess: false,
+  validerFail: false,
+  validerLoading: false,
+  validerMessage: "",
+};

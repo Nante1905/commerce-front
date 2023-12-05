@@ -1,3 +1,4 @@
+import { WarningAmber } from "@mui/icons-material";
 import {
   Button,
   Table,
@@ -43,6 +44,17 @@ const FactureListComponent = (props: FactureListProps) => {
                       facture.employe.direction.code}
                   </TableCell>
                   <TableCell>{facture.jour}</TableCell>
+                  {facture.probleme.length != 0 ? (
+                    <TableCell>
+                      <WarningAmber
+                        style={{
+                          color: "red",
+                        }}
+                      />
+                    </TableCell>
+                  ) : (
+                    <></>
+                  )}
                   <TableCell>
                     <Link to={"/facture/" + facture.id}>
                       <Button variant="contained" color="primary">
