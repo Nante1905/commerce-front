@@ -26,6 +26,11 @@ import SaisieReponseProformaRoot from "./components/proforma/containers/saisie-r
 import LoginProtection from "./components/shared/components/login-protection/LoginProtection.tsx";
 import BonSortieListRoot from "./components/stock/containers/bon-sortie-list/bon-sortie-list-root.component.tsx";
 import BonSortieRoot from "./components/stock/containers/bon-sortie/bon-sortie-root.component.tsx";
+import EntreStockFormRoot from "./components/stock/containers/entre-stock-form-root/entre-stock-form-root.component.tsx";
+import BonEntreRoot from "./components/stock/containers/bon-entre/bon-entre-root.component.tsx";
+import BonEntreListRoot from "./components/stock/containers/bon-entre-list/bon-entre-list-root.component.tsx";
+import DispatchListRoot from "./components/dispatch/containers/dispatch-list/dispatch-list-root.component.tsx";
+import AccuseReceptionFormRoot from "./components/dispatch/containers/accuse-reception-form/accuse-reception-form-root.component.tsx";
 import EtatStockRoot from "./components/stock/containers/etat-stock-root/etat-stock-root.component.tsx";
 import SortieStockRoot from "./components/stock/containers/sortie-stock-root/sortie-stock-root.component.tsx";
 import Title from "./components/title/title.component.tsx";
@@ -152,6 +157,26 @@ const routes = createBrowserRouter([
       {
         path: "bon-sortie/:id",
         element: <BonSortieRoot />,
+      },
+      {
+        path: "entre-stock",
+        element: <EntreStockFormRoot />,
+      },
+      {
+        path: "bon-entree",
+        element: <BonEntreListRoot />,
+      },
+      {
+        path: "bon-entree/:id",
+        element: <BonEntreRoot />,
+      },
+      {
+        path: "dispatch",
+        element: <DispatchListRoot />,
+      },
+      {
+        path: "bon-sortie/:id/confirmation",
+        element: <AccuseReceptionFormRoot />,
       },
       {
         path: "/test",

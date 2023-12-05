@@ -1,4 +1,5 @@
-import "./sortie-stock-form.component.scss";
+import "./entre-stock-form.component.scss";
+
 import {
   Alert,
   Button,
@@ -11,64 +12,53 @@ import {
 } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import DetailsArticleQte, {
-  DetailsArticleQteType,
-} from "../../../shared/components/details-article-qte/details-article-qte";
-import { SortieStockState } from "../../types/Stock.state";
+import DetailsArticleQte from "../../../shared/components/details-article-qte/details-article-qte";
 import {
-  DetailsSortieStock,
-  SortieStock,
-  TypeSortie,
+  BonReception,
+  BonReceptionDetails,
+  EntreStock,
 } from "../../types/Stock.type";
 import { FormEvent, useState } from "react";
-import { Article, Direction } from "../../../../types/item.type";
 import { Dayjs } from "dayjs";
+import { BonCommandeDetails } from "../../../bon-de-commande/types/bon-commande.types";
+import {
+  DetailsStockToDetailsArticleQteType,
+  castToDetailsStock,
+} from "../../services/stock.service";
+import { Article } from "../../../../types/item.type";
 import { httpClient } from "../../../shared/services/interceptor/axios.interceptor";
-import { castToDetailsStock } from "../../services/stock.service";
 
-export interface SortieStockFormProps {
-  types: TypeSortie[];
-  directions: Direction[];
+export interface EntreStockFormProps {
+  bonReceptions: BonReception[];
   articles: Article[];
 }
 
-interface SortieStockFormState {
-  form: SortieStock;
+interface EntreStockFormState {
+  form: EntreStock;
   error: string;
   message: string;
 }
 
-const SortieStockForm = (props: SortieStockFormProps) => {
-  const types = props.types;
-  const directions = props.directions;
-  const articles = props.articles;
-  const initialFormState: SortieStock = {
-    jour: null,
-    type: null,
-    destinataire: null,
-    details: [],
-  };
-
-  const [state, setState] = useState<SortieStockFormState>({
-    form: initialFormState,
+const EntreStockForm = (props: EntreStockFormProps) => {
+  const [state, setState] = useState<EntreStockFormState>({
+    form: {
+      jour: null,
+      bonReception: null,
+      details: [],
+    },
     error: "",
     message: "",
   });
-
-  const hideDestinataire = (idType: number): boolean => {
-    return types
-      .filter((t) => t.id == idType)[0]
-      ?.nom?.toLowerCase()
-      .includes("dispatch") as boolean;
-  };
 
   const submitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (state.form.details.length == 0) {
       setState((state) => ({ ...state, error: "Ajoutez des articles" }));
     } else {
+      console.log("SENDING DATA ", state.form);
+
       httpClient
-        .post("/sortie-stock", state.form)
+        .post("/entre-stock", state.form)
         .then((res) => {
           const response = res.data;
           if (response.ok) {
@@ -122,73 +112,43 @@ const SortieStockForm = (props: SortieStockFormProps) => {
               </LocalizationProvider>
             </FormControl>
             <FormControl style={{ width: "30%" }}>
-              <InputLabel id="select-label">Type de sortie</InputLabel>
+              <InputLabel id="select-label">Bon de réception</InputLabel>
 
               <Select
                 labelId="select-label"
                 id="select"
-                label="Type de sortie"
+                label="Bon de réception"
                 required
                 onChange={(event) => {
                   setState((state) => ({
                     ...state,
                     form: {
                       ...state.form,
-                      type: { id: event.target.value as number },
+                      bonReception: { id: event.target.value as number },
+                      details: DetailsStockToDetailsArticleQteType(
+                        props.bonReceptions.filter(
+                          (f) => f.id == event.target.value
+                        )[0]?.details as BonReceptionDetails[]
+                      ),
                     },
                   }));
-                  if (hideDestinataire(event.target.value as number) == false) {
-                    setState((state) => ({
-                      ...state,
-                      form: {
-                        ...state.form,
-                        destinataire: null,
-                      },
-                    }));
-                  }
                 }}
               >
-                {types?.map((type, index) => (
-                  <MenuItem value={type.id} key={`type_${index}`}>
-                    {type.nom}
+                {props.bonReceptions?.map((bon, index) => (
+                  <MenuItem value={bon.id} key={`bon_${index}`}>
+                    {bon.reference}
                   </MenuItem>
                 ))}
               </Select>
+              {props.bonReceptions.length == 0 && (
+                <p>Aucun bon de réception valide</p>
+              )}
             </FormControl>
-            {hideDestinataire(state.form.type?.id as number) && (
-              <FormControl style={{ width: "30%" }}>
-                <InputLabel id="select-label">Destinataire</InputLabel>
-
-                <Select
-                  labelId="select-label"
-                  id="select"
-                  label="Destinataire"
-                  required
-                  onChange={(event) => {
-                    setState((state) => ({
-                      ...state,
-                      form: {
-                        ...state.form,
-                        destinataire: {
-                          id: event.target.value as number,
-                        },
-                      },
-                    }));
-                  }}
-                >
-                  {directions?.map((direction, index) => (
-                    <MenuItem value={direction.id} key={`dir_${index}`}>
-                      {direction.nom}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            )}
           </div>
           <h4 className="center subtitle ">Détails</h4>
           <DetailsArticleQte
             withPu={false}
-            articles={articles}
+            articles={props.articles}
             onDataChange={(data) => {
               setState((state) => ({
                 ...state,
@@ -197,8 +157,8 @@ const SortieStockForm = (props: SortieStockFormProps) => {
                   details: castToDetailsStock(data),
                 },
               }));
-              console.log("Article");
             }}
+            details={DetailsStockToDetailsArticleQteType(state.form.details)}
           />
           <div className="actions">
             <Button variant="contained" type="submit">
@@ -235,4 +195,4 @@ const SortieStockForm = (props: SortieStockFormProps) => {
   );
 };
 
-export default SortieStockForm;
+export default EntreStockForm;

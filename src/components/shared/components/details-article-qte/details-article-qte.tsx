@@ -11,6 +11,8 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Article } from "../../../../types/item.type";
 
 const DetailsArticleQte = (props: DetailsArticleQteProps) => {
+  console.log("props tonga ", props.details);
+
   const [state, setState] = useState<DetailsArticleQteState>(initialState);
 
   const handleChangeArticle = (
@@ -24,6 +26,7 @@ const DetailsArticleQte = (props: DetailsArticleQteProps) => {
       ...state,
       form: form,
     }));
+
     props.onDataChange(state.form.details);
   };
 
@@ -85,6 +88,8 @@ const DetailsArticleQte = (props: DetailsArticleQteProps) => {
   //   props?.details ? props.details : state.form.details;
 
   useEffect(() => {
+    // console.log(props.details);
+
     if (props?.details) {
       setState((state) => ({
         ...state,

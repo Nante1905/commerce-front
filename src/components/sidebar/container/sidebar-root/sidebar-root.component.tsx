@@ -31,6 +31,12 @@ const SidebarRoot = ({ children }: SidebarRootProps) => {
       link: "/sortie-stock",
       authorization: ["Magasin"],
     },
+    {
+      text: "bon d'entrée",
+      icon: "bx bx-home-alt",
+      link: "/bon-entree",
+      authorization: ["Magasin"],
+    },
   ];
 
   return <SidebarComponent navItems={navs}>{children}</SidebarComponent>;
