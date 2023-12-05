@@ -166,59 +166,64 @@ const FactureDetailsComponent = (props: FactureDetailsProps) => {
             {probleme}
           </p>
         ))}
-        <div className="explications-list">
-          <div className="explication-actions">
-            <p className="subtitle">Explications</p>
-            <IconButton
-              aria-label="expand row"
-              size="small"
-              onClick={() =>
-                setState((state) => ({
-                  ...state,
-                  openExplication: !state.openExplication,
-                }))
-              }
-            >
-              {state.openExplication ? (
-                <KeyboardArrowUp />
-              ) : (
-                <KeyboardArrowDown />
-              )}
-            </IconButton>
+        {props.facture?.probleme.length != 0 && (
+          <div className="explications-list">
+            <div className="explication-actions">
+              <p className="subtitle">Explications</p>
+              <IconButton
+                aria-label="expand row"
+                size="small"
+                onClick={() =>
+                  setState((state) => ({
+                    ...state,
+                    openExplication: !state.openExplication,
+                  }))
+                }
+              >
+                {state.openExplication ? (
+                  <KeyboardArrowUp />
+                ) : (
+                  <KeyboardArrowDown />
+                )}
+              </IconButton>
+            </div>
+            <Collapse in={state.openExplication} timeout="auto" unmountOnExit>
+              {props.facture?.explications?.map((explication, index) => (
+                <div className="explication-card" key={`k_${index}`}>
+                  <p>{explication.explication}</p>
+                  <small>
+                    {" "}
+                    <strong>
+                      {explication.employe.nom} {explication.employe.prenom}
+                    </strong>
+                    , {new Date(explication.jour).toLocaleString()}{" "}
+                  </small>
+                </div>
+              ))}
+              <form
+                className="form"
+                onSubmit={(event) => sendExplication(event)}
+              >
+                <FormControl sx={{ width: "30%" }}>
+                  <TextField
+                    label="Votre explication"
+                    multiline
+                    required
+                    onChange={(event) => {
+                      setState((state) => ({
+                        ...state,
+                        explication: { text: event.target.value },
+                      }));
+                    }}
+                  />
+                </FormControl>
+                <Button type="submit" variant="contained">
+                  Envoyer
+                </Button>
+              </form>
+            </Collapse>
           </div>
-          <Collapse in={state.openExplication} timeout="auto" unmountOnExit>
-            {props.facture?.explications?.map((explication, index) => (
-              <div className="explication-card" key={`k_${index}`}>
-                <p>{explication.explication}</p>
-                <small>
-                  {" "}
-                  <strong>
-                    {explication.employe.nom} {explication.employe.prenom}
-                  </strong>
-                  , {new Date(explication.jour).toLocaleString()}{" "}
-                </small>
-              </div>
-            ))}
-            <form className="form" onSubmit={(event) => sendExplication(event)}>
-              <FormControl sx={{ width: "30%" }}>
-                <TextField
-                  label="Votre explication"
-                  multiline
-                  required
-                  onChange={(event) => {
-                    setState((state) => ({
-                      ...state,
-                      explication: { text: event.target.value },
-                    }));
-                  }}
-                />
-              </FormControl>
-              <Button type="submit" variant="contained">
-                Envoyer
-              </Button>
-            </form>
-          </Collapse>
-        </div>
+        )}
         <div className="content" ref={pdfRef}>
           <h2>Facture</h2>
           <div className="info fournisseur">
