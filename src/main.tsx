@@ -16,23 +16,25 @@ import DemandeFormRoot from "./components/demande/containers/demande-form-root/d
 import DemandeListRoot from "./components/demande/containers/demande-list-root/demande-list-root.component.tsx";
 import DemandeNatureRoot from "./components/demande/containers/demande-nature-root/demande-nature-root.component.tsx";
 import { demandeStore } from "./components/demande/store/demande.store.ts";
+import FactureDetailsRoot from "./components/facture/container/facture-details-root/facture-details-root.tsx";
+import FactureFormRoot from "./components/facture/container/facture-form-root/facture-form-root.tsx";
+import FactureListRoot from "./components/facture/container/facture-list-root/facture-list-root.tsx";
 import ProformaReponseListComponent from "./components/proforma/components/proforma-reponse-list/proforma-reponse-list.tsx";
 import DemandeProformaListRoot from "./components/proforma/containers/demande-proforma-list-root/demande-profoma-list-root.tsx";
 import DemandeProformaRoot from "./components/proforma/containers/demande-proforma-root/demande-proforma-root.component.tsx";
 import SaisieReponseProformaRoot from "./components/proforma/containers/saisie-reponse-proforma-root/saisie-reponse-proforma-root.tsx";
 import LoginProtection from "./components/shared/components/login-protection/LoginProtection.tsx";
-import EtatStockRoot from "./components/stock/containers/etat-stock-root/etat-stock-root.component.tsx";
-import Title from "./components/title/title.component.tsx";
-import SortieStockRoot from "./components/stock/containers/sortie-stock-root/sortie-stock-root.component.tsx";
-import "./index.css";
 import BonSortieListRoot from "./components/stock/containers/bon-sortie-list/bon-sortie-list-root.component.tsx";
-import BonSortieComponent from "./components/stock/components/bon-sortie/bon-sortie-component.component.tsx";
 import BonSortieRoot from "./components/stock/containers/bon-sortie/bon-sortie-root.component.tsx";
 import EntreStockFormRoot from "./components/stock/containers/entre-stock-form-root/entre-stock-form-root.component.tsx";
 import BonEntreRoot from "./components/stock/containers/bon-entre/bon-entre-root.component.tsx";
 import BonEntreListRoot from "./components/stock/containers/bon-entre-list/bon-entre-list-root.component.tsx";
 import DispatchListRoot from "./components/dispatch/containers/dispatch-list/dispatch-list-root.component.tsx";
 import AccuseReceptionFormRoot from "./components/dispatch/containers/accuse-reception-form/accuse-reception-form-root.component.tsx";
+import EtatStockRoot from "./components/stock/containers/etat-stock-root/etat-stock-root.component.tsx";
+import SortieStockRoot from "./components/stock/containers/sortie-stock-root/sortie-stock-root.component.tsx";
+import Title from "./components/title/title.component.tsx";
+import "./index.css";
 
 const routes = createBrowserRouter([
   {
@@ -131,6 +133,18 @@ const routes = createBrowserRouter([
       {
         path: "bon-livraison",
         element: <BonLivraisonListRoot />,
+      },
+      {
+        path: "facture/saisie",
+        element: <FactureFormRoot />,
+      },
+      {
+        path: "facture",
+        element: <FactureListRoot />,
+      },
+      {
+        path: "facture/:id",
+        element: <FactureDetailsRoot />,
       },
       {
         path: "sortie-stock",

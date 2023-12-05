@@ -50,7 +50,7 @@ const BonLivraisonFormComponent = (props: BonLivraisonFormComponentProps) => {
         setState((state) => ({
           ...state,
           insertFail: true,
-          insertMessage: err.response.data.message || err.response.data,
+          insertMessage: err.response.data.err || err.response.data,
         }));
       });
   };
@@ -162,7 +162,16 @@ const BonLivraisonFormComponent = (props: BonLivraisonFormComponentProps) => {
         </div>
       </section>
       <Snackbar open={state.insertSuccess || state.insertFail}>
-        <Alert severity={state.insertSuccess ? "success" : "error"}>
+        <Alert
+          severity={state.insertSuccess ? "success" : "error"}
+          onClose={() => {
+            setState((state) => ({
+              ...state,
+              insertFail: false,
+              insertSuccess: false,
+            }));
+          }}
+        >
           {state.insertMessage}
         </Alert>
       </Snackbar>

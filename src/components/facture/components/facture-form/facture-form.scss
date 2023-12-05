@@ -1,0 +1,18 @@
+.facture-form {
+  .content {
+    margin-bottom: 2rem;
+  }
+
+  .form-item {
+    margin-block: 1rem;
+  }
+  .submit {
+    display: flex;
+    justify-content: center;
+  }
+  .details {
+    display: flex;
+    justify-content: space-evenly;
+    margin-block: 1rem;
+  }
+}
