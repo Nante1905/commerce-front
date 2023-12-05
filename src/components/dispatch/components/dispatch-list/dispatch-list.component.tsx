@@ -61,7 +61,7 @@ const DispatchList = (props: DispatchListProps) => {
                   </TableCell>
                   {bon.status == 0 && (
                     <TableCell>
-                      <Link to={"/bon-sortie/" + bon.id}>
+                      <Link to={"/bon-sortie/" + bon.id + "/confirmation"}>
                         <Button variant="contained" color="primary">
                           Saisir l'accusé de réception
                         </Button>

@@ -32,6 +32,7 @@ import EntreStockFormRoot from "./components/stock/containers/entre-stock-form-r
 import BonEntreRoot from "./components/stock/containers/bon-entre/bon-entre-root.component.tsx";
 import BonEntreListRoot from "./components/stock/containers/bon-entre-list/bon-entre-list-root.component.tsx";
 import DispatchListRoot from "./components/dispatch/containers/dispatch-list/dispatch-list-root.component.tsx";
+import AccuseReceptionFormRoot from "./components/dispatch/containers/accuse-reception-form/accuse-reception-form-root.component.tsx";
 
 const routes = createBrowserRouter([
   {
@@ -158,6 +159,10 @@ const routes = createBrowserRouter([
       {
         path: "dispatch",
         element: <DispatchListRoot />,
+      },
+      {
+        path: "bon-sortie/:id/confirmation",
+        element: <AccuseReceptionFormRoot />,
       },
       {
         path: "/test",
