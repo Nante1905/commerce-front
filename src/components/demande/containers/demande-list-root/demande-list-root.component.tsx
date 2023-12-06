@@ -6,6 +6,7 @@ import { findDemandeSuccess } from "../../store/slice/demande.slice";
 import "./demande-list-root.component.scss";
 
 const DemandeListRoot = () => {
+  document.title = "Liste des demandes";
   useEffect(() => {
     findAllDemandes()
       .then((res) => {
